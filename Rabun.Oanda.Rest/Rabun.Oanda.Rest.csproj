@@ -64,6 +64,21 @@
     <Compile Include="Models\TransactionMarginCallExit .cs" />
     <Compile Include="Models\TransactionMarginCloseOut.cs" />
     <Compile Include="Models\TransactionMarketIfTouchedCreate.cs" />
+    <Compile Include="Models\TransactionMarketOrderCreate.cs" />
+    <Compile Include="Models\TransactionMigrateTradeClose.cs" />
+    <Compile Include="Models\TransactionMigrateTradeOpen.cs" />
+    <Compile Include="Models\TransactionOrderCancel.cs" />
+    <Compile Include="Models\TransactionOrderFilled.cs" />
+    <Compile Include="Models\TransactionOrderUpdate.cs" />
+    <Compile Include="Models\TransactionSatMarginRate.cs" />
+    <Compile Include="Models\TransactionSimple.cs" />
+    <Compile Include="Models\TransactionStopLossField.cs" />
+    <Compile Include="Models\TransactionStopOrderCreate.cs" />
+    <Compile Include="Models\TransactionTakeProfitField.cs" />
+    <Compile Include="Models\TransactionTradeClose.cs" />
+    <Compile Include="Models\TransactionTradeUpdate.cs" />
+    <Compile Include="Models\TransactionTrailingStopField.cs" />
+    <Compile Include="Models\TransactionTransferFounds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

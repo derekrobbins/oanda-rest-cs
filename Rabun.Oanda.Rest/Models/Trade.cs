@@ -2,15 +2,15 @@
 {
     public class Trade
     {
-        public int id { get; set; }
-        public int units { get; set; }
-        public OandaTypes.Side side;
-        public string instrument { get; set; }
-        public string time { get; set; }
-        public float price { get; set; }
-        public float takeProfit { get; set; }
-        public float stopLoss { get; set; }
-        public float trailingStop { get; set; }
-        public float trailingAmount { get; set; }
+        public int Id { get; set; }
+        public int Units { get; set; }
+        public OandaTypes.Side Side { get; set; }
+        public string Instrument { get; set; }
+        public string Time { get; set; }
+        public float Price { get; set; }
+        public float TakeProfit { get; set; }
+        public float StopLoss { get; set; }
+        public float TrailingStop { get; set; }
+        public float TrailingAmount { get; set; }
     }
 }

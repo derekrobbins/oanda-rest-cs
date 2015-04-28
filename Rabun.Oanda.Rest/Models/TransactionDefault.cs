@@ -1,6 +1,6 @@
 ﻿namespace Rabun.Oanda.Rest.Models
 {
-    public class TransactionDefault
+    public class TransactionDefault : TransactionSimple
     {
         public int? Expiry { get; set; }
         public OandaTypes.Reason Reason { get; set; }

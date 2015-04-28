@@ -1,6 +1,6 @@
 ﻿namespace Rabun.Oanda.Rest.Models
 {
-    public class OrderMarket
+    public class OrderMarket: Order
     {
         public int Units { get; set; }
         public float TakeProfit { get; set; }

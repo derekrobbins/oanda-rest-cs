@@ -4,7 +4,7 @@ namespace Rabun.Oanda.Rest.Models
 {
     public class CandleBidAsk
     {
-        public String Time;
+        public string Time { get; set; }
         public float OpenBid { get; set; }
         public float OpenAsk { get; set; }
         public float HighBid { get; set; }
