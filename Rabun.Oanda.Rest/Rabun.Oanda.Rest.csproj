@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B6658EBA-A48A-4DD2-8B96-AD19B2A781AD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Rabun.Oanda.Rest</RootNamespace>
+    <AssemblyName>Rabun.Oanda.Rest</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile344</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <Folder Include="Base\" />
+    <Folder Include="Endpoints\" />
+    <Folder Include="Factories\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Candle.cs" />
+    <Compile Include="Models\CandleBidAsk.cs" />
+    <Compile Include="Models\CandleMid.cs" />
+    <Compile Include="Models\InstrumentHistory.cs" />
+    <Compile Include="Models\InstrumentModel.cs" />
+    <Compile Include="Models\OandaTypes.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderMarket.cs" />
+    <Compile Include="Models\OrderMarketIfTouched .cs" />
+    <Compile Include="Models\Position.cs" />
+    <Compile Include="Models\PositionClosed.cs" />
+    <Compile Include="Models\Price.cs" />
+    <Compile Include="Models\Trade.cs" />
+    <Compile Include="Models\TradeClosed.cs" />
+    <Compile Include="Models\TradeOpened.cs" />
+    <Compile Include="Models\Transaction.cs" />
+    <Compile Include="Models\TransactionDailyInterest .cs" />
+    <Compile Include="Models\TransactionDefault.cs" />
+    <Compile Include="Models\TransactionFee.cs" />
+    <Compile Include="Models\TransactionLimitOrderCreate.cs" />
+    <Compile Include="Models\TransactionMarginCallEnter.cs" />
+    <Compile Include="Models\TransactionMarginCallExit .cs" />
+    <Compile Include="Models\TransactionMarginCloseOut.cs" />
+    <Compile Include="Models\TransactionMarketIfTouchedCreate.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
