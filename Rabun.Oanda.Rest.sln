@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabun.Oanda.Rest", "Rabun.O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabun.Oanda.Rest.Test", "Rabun.Oanda.Rest.Test\Rabun.Oanda.Rest.Test.csproj", "{89BCF1D1-9B06-4705-9678-05923A85B132}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{20A6CEE1-3780-4738-90BB-0C23F598CDCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleSimpleExample", "ConsoleSimpleExample\ConsoleSimpleExample.csproj", "{2301BED6-A798-436E-AE24-02F355913205}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +25,15 @@ Global
 		{89BCF1D1-9B06-4705-9678-05923A85B132}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89BCF1D1-9B06-4705-9678-05923A85B132}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89BCF1D1-9B06-4705-9678-05923A85B132}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2301BED6-A798-436E-AE24-02F355913205}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2301BED6-A798-436E-AE24-02F355913205}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2301BED6-A798-436E-AE24-02F355913205}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2301BED6-A798-436E-AE24-02F355913205}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2301BED6-A798-436E-AE24-02F355913205} = {20A6CEE1-3780-4738-90BB-0C23F598CDCF}
 	EndGlobalSection
 EndGlobal

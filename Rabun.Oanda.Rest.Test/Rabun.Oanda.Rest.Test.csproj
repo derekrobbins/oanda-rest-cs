@@ -52,6 +52,13 @@
   <ItemGroup>
     <Compile Include="EndpointTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RateEndpointsTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rabun.Oanda.Rest\Rabun.Oanda.Rest.csproj">
+      <Project>{b6658eba-a48a-4dd2-8b96-ad19b2a781ad}</Project>
+      <Name>Rabun.Oanda.Rest</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
