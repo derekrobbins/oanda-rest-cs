@@ -41,17 +41,16 @@ namespace Rabun.Oanda.Rest.Endpoints
         /// Get an instrument list
         /// Get a list of tradeable instruments (currency pairs, CFDs, and commodities) that are available for trading with the account specified.
         /// </summary>
-        /// <param name="fields">
-        /// Optional An URL encoded (%2C) comma separated list of instrument fields that are to be returned in the response.
-        /// The instrument field will be returned regardless of the input to this query parameter.
-        /// Please see the Response Parameters section below for a list of valid values.
+        /// <param name="instruments">
+        /// Optional An URL encoded (%2C) comma separated list of instruments that are to be returned in the response.
+        /// If the instruments option is not specified, all instruments will be returned.
         /// </param>
         /// <returns>Task of InstrumentModel List</returns>
-        public async Task<List<InstrumentModel>> GetInstruments(string fields)
+        public async Task<List<InstrumentModel>> GetInstruments(string instruments)
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("accountId", _accountId);
-            properties.Add("fields", fields);
+            properties.Add("instruments", instruments);
 
             InstrumentWrapper result = await Get<InstrumentWrapper>(null, properties, _instrumentsRoute);
             return result.Instruments;
@@ -212,8 +211,8 @@ namespace Rabun.Oanda.Rest.Endpoints
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("instrument", instrument);
             properties.Add("granularity", granularity);
-            properties.Add("start", start);
-            properties.Add("end", end);
+            properties.Add("start", start.ToString("o"));
+            properties.Add("end", end.ToString("o"));
 
             Candle<CandleBidAsk> result = await Get<Candle<CandleBidAsk>>(null, properties, _candleRoute);
             return result;

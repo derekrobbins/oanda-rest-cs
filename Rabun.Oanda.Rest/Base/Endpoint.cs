@@ -67,9 +67,10 @@ namespace Rabun.Oanda.Rest.Base
                 sb.Append("?");
                 foreach (var p in properties)
                 {
-                    sb.AppendFormat("{0}={1}&", p.Key, p.Value);
+                    sb.AppendFormat("{0}={1}&", p.Key, Uri.EscapeDataString(p.Value.ToString()));
                 }
                 sb.Remove(sb.Length - 1, 1);
+
 
                 using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, sb.ToString()))
                 {
