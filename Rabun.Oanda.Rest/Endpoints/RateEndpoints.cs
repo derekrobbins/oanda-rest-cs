@@ -313,8 +313,8 @@ namespace Rabun.Oanda.Rest.Endpoints
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("instrument", instrument);
             properties.Add("granularity", granularity);
-            properties.Add("start", start);
-            properties.Add("end", end);
+            properties.Add("start", start.ToString("o"));
+            properties.Add("end", end.ToString("o"));
 
             Candle<CandleMid> result = await Get<Candle<CandleMid>>(null, properties, _candleRoute);
             return result;
