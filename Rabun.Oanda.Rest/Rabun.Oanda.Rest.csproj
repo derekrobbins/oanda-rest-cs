@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Base\AccountType.cs" />
     <Compile Include="Base\Endpoint.cs" />
+    <Compile Include="Endpoints\PositionEndpoints.cs" />
     <Compile Include="Endpoints\RateEndpoints.cs" />
     <Compile Include="Models\Candle.cs" />
     <Compile Include="Models\CandleBidAsk.cs" />

@@ -102,5 +102,36 @@ namespace Rabun.Oanda.Rest.Base
             }
         }
 
+        protected async Task<T> Delete<T>(Dictionary<string, string> routeParams, string route)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = MakeUrl(MakeEndpoint(_accountType, route), routeParams);
+
+
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, url))
+                {
+
+                    request.Headers.Add("Authorization", string.Format("Bearer {0}", _key));
+
+                    HttpResponseMessage response = await client.SendAsync(request);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string str = await response.Content.ReadAsStringAsync();
+                        T result = JsonConvert.DeserializeObject<T>(str);
+                        return result;
+                    }
+                    if (response.Content != null)
+                    {
+                        string str = await response.Content.ReadAsStringAsync();
+                        throw new Exception(str);
+                    }
+
+                    throw new Exception(response.StatusCode.ToString());
+                }
+            }
+        }
+
     }
 }
