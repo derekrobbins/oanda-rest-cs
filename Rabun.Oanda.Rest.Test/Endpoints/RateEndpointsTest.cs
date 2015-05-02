@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rabun.Oanda.Rest.Base;
@@ -94,6 +95,7 @@ namespace Rabun.Oanda.Rest.Test.Endpoints
             Assert.IsTrue(candle.Candles.Count > 0);
         }
 
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -130,6 +132,45 @@ namespace Rabun.Oanda.Rest.Test.Endpoints
             Candle<CandleMid> candle = await _rateEndpoints.GetCandlesMid("EUR_USD", OandaTypes.GranularityType.H1, start, end);
             Assert.IsNotNull(candle);
             Assert.IsTrue(candle.Candles.Count > 0);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        [TestMethod]
+        public async Task GetCandlesByAllWithCountParams()
+        {
+            object candle =
+                await
+                    _rateEndpoints.GetCandles("EUR_USD", OandaTypes.GranularityType.M, 100,
+                        OandaTypes.CandleFormat.bidask,
+                        true, null, OandaTypes.WeeklyAlignment.Friday);
+
+
+            Assert.IsTrue(candle is Candle<CandleBidAsk>);
+            Candle<CandleBidAsk> cba = candle as Candle<CandleBidAsk>;
+
+            Assert.IsNotNull(cba);
+            Assert.IsTrue(cba.Candles.Count == 100);
+        }
+
+        [TestMethod]
+        public async Task GetCandlesByAllWithStartEndParams()
+        {
+            DateTime start = DateTime.UtcNow.AddDays(-1);
+            DateTime end = DateTime.UtcNow;
+
+            object candle =
+                await
+                    _rateEndpoints.GetCandles("EUR_USD", OandaTypes.GranularityType.M, start, end,
+                        OandaTypes.CandleFormat.midpoint,
+                        true, null, OandaTypes.WeeklyAlignment.Friday);
+
+
+            Assert.IsTrue(candle is Candle<CandleMid>);
+            Candle<CandleMid> cba = candle as Candle<CandleMid>;
+
+            Assert.IsNotNull(cba);
+            Assert.IsTrue(cba.Candles.Count > 0);
         }
 
         #endregion

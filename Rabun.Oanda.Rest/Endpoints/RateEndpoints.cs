@@ -365,14 +365,23 @@ namespace Rabun.Oanda.Rest.Endpoints
         /// timezones supported by the REST API can be found http://developer.oanda.com/docs/timezones.txt.
         /// </param>
         /// <returns></returns>
-        public async Task<Candle<object>> GetCandles(string instrument, OandaTypes.GranularityType? granularity, DateTime? start,
+        public async Task<object> GetCandles(string instrument, OandaTypes.GranularityType? granularity, DateTime? start,
             DateTime? end, OandaTypes.CandleFormat? candleFormat, bool? includeFirst, byte? dailyAlignment,
             OandaTypes.WeeklyAlignment? weeklyAlignment)
         {
             Dictionary<string, object> properties = MakeCandle(instrument, granularity, null, start, end, candleFormat, includeFirst, dailyAlignment,
                 weeklyAlignment);
 
-            Candle<object> candle = await Get<Candle<object>>(null, properties, _candleRoute);
+            object candle = null;
+            if (candleFormat == OandaTypes.CandleFormat.bidask)
+            {
+                candle = await Get<Candle<CandleBidAsk>>(null, properties, _candleRoute);
+            }
+            else if (candleFormat == OandaTypes.CandleFormat.midpoint)
+            {
+                candle = await Get<Candle<CandleMid>>(null, properties, _candleRoute);
+            }
+
             return candle;
         }
 
@@ -421,13 +430,22 @@ namespace Rabun.Oanda.Rest.Endpoints
         /// </param>
         /// <returns></returns>
         /// <returns></returns>
-        public async Task<Candle<object>> GetCandles(string instrument, OandaTypes.GranularityType? granularity, int? count,
+        public async Task<object> GetCandles(string instrument, OandaTypes.GranularityType? granularity, int? count,
             OandaTypes.CandleFormat? candleFormat, bool? includeFirst, byte? dailyAlignment,
             OandaTypes.WeeklyAlignment? weeklyAlignment)
         {
             Dictionary<string, object> properties = MakeCandle(instrument, granularity, count, null, null, candleFormat, includeFirst, dailyAlignment, weeklyAlignment);
 
-            Candle<object> candle = await Get<Candle<object>>(null, properties, _candleRoute);
+            object candle = null;
+            if (candleFormat == OandaTypes.CandleFormat.bidask)
+            {
+                candle = await Get<Candle<CandleBidAsk>>(null, properties, _candleRoute);
+            }
+            else if (candleFormat == OandaTypes.CandleFormat.midpoint)
+            {
+                candle = await Get<Candle<CandleMid>>(null, properties, _candleRoute);
+            }
+
             return candle;
         }
 
@@ -450,15 +468,14 @@ namespace Rabun.Oanda.Rest.Endpoints
             if (count != null && start == null && end == null)
                 fields.Add("count", count);
 
-            if (start != null)
-            {
-                fields.Add("start", start.Value.ToString());
-            }
-
             if (start != null && end != null)
             {
-                fields.Add("start", start.Value.ToString());
-                fields.Add("end", end.Value.ToString());
+                fields.Add("start", start.Value.ToString("o"));
+                fields.Add("end", end.Value.ToString("o"));
+            }
+            else if (start != null)
+            {
+                fields.Add("start", start.Value.ToString("o"));
             }
 
             if (candleFormat != null)
@@ -468,7 +485,7 @@ namespace Rabun.Oanda.Rest.Endpoints
                 includeFirst = true;
 
             if (start != null)
-                fields.Add("includeFirst", includeFirst);
+                fields.Add("includeFirst", includeFirst.ToString().ToLower());
 
             if (dailyAlignment == null)
             {
