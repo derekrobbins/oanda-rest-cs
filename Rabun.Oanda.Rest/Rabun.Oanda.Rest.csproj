@@ -46,6 +46,7 @@
     <Compile Include="Endpoints\OrderEndpoints.cs" />
     <Compile Include="Endpoints\PositionEndpoints.cs" />
     <Compile Include="Endpoints\RateEndpoints.cs" />
+    <Compile Include="Endpoints\TradeEndpoints.cs" />
     <Compile Include="Models\Candle.cs" />
     <Compile Include="Models\CandleBidAsk.cs" />
     <Compile Include="Models\CandleMid.cs" />
