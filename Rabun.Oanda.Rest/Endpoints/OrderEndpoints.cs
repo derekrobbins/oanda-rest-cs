@@ -20,7 +20,7 @@ namespace Rabun.Oanda.Rest.Endpoints
 
         #region GetOrders
 
-        public class OrdersWrapper
+        private class OrdersWrapper
         {
             public List<Order> Orders { get; set; }
         }

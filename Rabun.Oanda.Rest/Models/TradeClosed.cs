@@ -1,6 +1,6 @@
 ﻿namespace Rabun.Oanda.Rest.Models
 {
-    class TradeClosed
+    public class TradeClosed
     {
         public int Id { get; set; }
         public float Price { get; set; }
