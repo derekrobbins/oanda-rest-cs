@@ -100,9 +100,7 @@ namespace Rabun.Oanda.Rest.Base
                 }
             }
         }
-
-        protected async Task<T> Post<T>(Dictionary<string, string> routeParams, Dictionary<string, object> properties,
-            string route)
+        protected async Task<T> Post<T>(Dictionary<string, string> routeParams, Dictionary<string, object> properties, string route)
         {
             string url = MakeUrl(MakeEndpoint(_accountType, route), routeParams);
 
@@ -141,7 +139,45 @@ namespace Rabun.Oanda.Rest.Base
                 }
             }
         }
+        protected async Task<T> Patch<T>(Dictionary<string, string> routeParams, Dictionary<string, object> properties, string route)
+        {
+            string url = MakeUrl(MakeEndpoint(_accountType, route), routeParams);
 
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("PATCH"), url))
+                {
+                    foreach (KeyValuePair<string, object> property in properties)
+                    {
+                        request.Properties.Add(property);
+                    }
+
+                    request.Headers.Add("Authorization", string.Format("Bearer {0}", _key));
+
+                    HttpResponseMessage response = await client.SendAsync(request);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string str = await response.Content.ReadAsStringAsync();
+                        T result = JsonConvert.DeserializeObject<T>(str);
+                        return result;
+                    }
+                    else
+                    {
+                        if (response.Content != null)
+                        {
+                            string str = await response.Content.ReadAsStringAsync();
+                            throw new Exception(str);
+                        }
+                        else
+                        {
+                            throw new Exception(response.StatusCode.ToString());
+                        }
+                    }
+
+                }
+            }
+        }
         protected async Task<T> Delete<T>(Dictionary<string, string> routeParams, string route)
         {
             using (HttpClient client = new HttpClient())

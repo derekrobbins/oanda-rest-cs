@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Rabun.Oanda.Rest.Base;
 using Rabun.Oanda.Rest.Models;
@@ -17,7 +15,7 @@ namespace Rabun.Oanda.Rest.Endpoints
         public OrderEndpoints(string key, AccountType accountType, int accountId)
             : base(key, accountType)
         {
-            this._accountId = accountId;
+            _accountId = accountId;
         }
 
         #region GetOrders
@@ -225,7 +223,46 @@ namespace Rabun.Oanda.Rest.Endpoints
 
         #region UpdateOrder
 
+        public async Task<OrderMarketIfTouched> UpdateOrder(int orderId, int? units, float? price, DateTime? expiry,
+            float? lowerBound, float? upperBound, float? stopLoss, float? takeProfit,
+            int? trailingStop)
+        {
+            Dictionary<string, string> routeParams = new Dictionary<string, string>();
+            routeParams.Add("accountId", _accountId.ToString());
+            routeParams.Add("orderId", orderId.ToString());
 
+
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            if (units != null) properties.Add("units", units);
+            if (expiry != null) properties.Add("expiry", expiry.Value.ToString("o"));
+            if (price != null) properties.Add("price", price);
+            if (lowerBound != null) properties.Add("lowerBound", lowerBound);
+            if (upperBound != null) properties.Add("upperBound", upperBound);
+            if (takeProfit != null) properties.Add("takeProfit", takeProfit);
+            if (trailingStop != null) properties.Add("trailingStop", trailingStop);
+
+            OrderMarketIfTouched orderMarketIfTouched = await Patch<OrderMarketIfTouched>(routeParams, properties, _orderRoute);
+            return orderMarketIfTouched;
+        }
+
+        #endregion
+
+        #region CloseOrder
+
+        /// <summary>
+        /// Close order
+        /// </summary>
+        /// <param name="orderId">Order id</param>
+        /// <returns></returns>
+        public async Task<Order> CloseOrder(int orderId)
+        {
+            Dictionary<string, string> routeParams = new Dictionary<string, string>();
+            routeParams.Add("accountId", _accountId.ToString());
+            routeParams.Add("orderId", orderId.ToString());
+
+            Order order = await Delete<Order>(routeParams, _ordersRoute);
+            return order;
+        }
 
         #endregion
 
