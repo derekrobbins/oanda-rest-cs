@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Rabun.Oanda.Rest.Base;
 using Rabun.Oanda.Rest.Models;
@@ -33,21 +34,20 @@ namespace Rabun.Oanda.Rest.Endpoints
             if (minId != null) properties.Add("minId", minId);
             if (!string.IsNullOrWhiteSpace(ids)) properties.Add("ids", ids);
 
-            dynamic result = Get<dynamic>(routeParams, properties, _transactionsRoute);
+            JObject result = await Get<JObject>(routeParams, properties, _transactionsRoute);
 
             OandaTypes.TransactionType type;
-            Enum.TryParse(result.transactions[0].type, out type);
+            Enum.TryParse(result["transactions"].First["type"].Value<string>(), out type);
 
             List<Transaction> transactions = new List<Transaction>();
             switch (type)
             {
                 case OandaTypes.TransactionType.MARKET_ORDER_CREATE:
                     {
-                        string j = JsonConvert.SerializeObject(result);
                         List<TransactionMarketOrderCreate> transactionMarketOrderCreates =
-                            JsonConvert.DeserializeObject<List<TransactionMarketOrderCreate>>(j);
+                            result.ToObject<List<TransactionMarketOrderCreate>>();
 
-                        transactions = fillTransactions(transactionMarketOrderCreates);
+                        transactions = transactionMarketOrderCreates.Cast<Transaction>().ToList();
 
                         break;
                     }
@@ -61,9 +61,5 @@ namespace Rabun.Oanda.Rest.Endpoints
 
         }
 
-        private List<Transaction> fillTransactions<T>(List<T> trs) where T: Transaction
-        {
-            return trs.Cast<Transaction>().ToList();
-        }
     }
 }
