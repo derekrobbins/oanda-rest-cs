@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -74,6 +73,47 @@ namespace Rabun.Oanda.Rest.Base
 
                 using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, sb.ToString()))
                 {
+
+                    request.Headers.Add("Authorization", string.Format("Bearer {0}", _key));
+
+                    HttpResponseMessage response = await client.SendAsync(request);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string str = await response.Content.ReadAsStringAsync();
+                        T result = JsonConvert.DeserializeObject<T>(str);
+                        return result;
+                    }
+                    else
+                    {
+                        if (response.Content != null)
+                        {
+                            string str = await response.Content.ReadAsStringAsync();
+                            throw new Exception(str);
+                        }
+                        else
+                        {
+                            throw new Exception(response.StatusCode.ToString());
+                        }
+                    }
+
+                }
+            }
+        }
+
+        protected async Task<T> Post<T>(Dictionary<string, string> routeParams, Dictionary<string, object> properties,
+            string route)
+        {
+            string url = MakeUrl(MakeEndpoint(_accountType, route), routeParams);
+
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url))
+                {
+                    foreach (KeyValuePair<string, object> property in properties)
+                    {
+                        request.Properties.Add(property);
+                    }
 
                     request.Headers.Add("Authorization", string.Format("Bearer {0}", _key));
 

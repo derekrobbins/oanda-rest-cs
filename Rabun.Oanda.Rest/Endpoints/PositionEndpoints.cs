@@ -9,8 +9,8 @@ namespace Rabun.Oanda.Rest.Endpoints
     public class PositionEndpoints : Endpoint
     {
 
-        private static String _positionsRoute = "/v1/accounts/:account_id/positions";
-        private static String _positionRoute = "/v1/accounts/:account_id/positions/{instrument}";
+        private static String _positionsRoute = "/v1/accounts/:accountId/positions";
+        private static String _positionRoute = "/v1/accounts/:accountId/positions/:instrument";
         private readonly int _accountId;
 
         public PositionEndpoints(string key, AccountType accountType, int accountId)
@@ -29,7 +29,7 @@ namespace Rabun.Oanda.Rest.Endpoints
         public async Task<List<Position>> GetPositions(int accountId)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
-            routeParams.Add("account_id", _accountId.ToString());
+            routeParams.Add("accountId", _accountId.ToString());
 
             List<Position> result = await Get<List<Position>>(routeParams, null, _positionsRoute);
             return result;
@@ -44,7 +44,7 @@ namespace Rabun.Oanda.Rest.Endpoints
         public async Task<Position> GetPosition(int accountId, string instrument)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
-            routeParams.Add("account_id", _accountId.ToString());
+            routeParams.Add("accountId", _accountId.ToString());
             routeParams.Add("instrument", instrument);
 
             Position result = await Get<Position>(routeParams, null, _positionsRoute);
@@ -60,7 +60,7 @@ namespace Rabun.Oanda.Rest.Endpoints
         public async Task<PositionClosed> ClosePosition(int accountId, string instrument)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
-            routeParams.Add("account_id", _accountId.ToString());
+            routeParams.Add("accountId", _accountId.ToString());
             routeParams.Add("instrument", instrument);
 
             PositionClosed positionClosed = await Delete<PositionClosed>(routeParams, _positionRoute);
