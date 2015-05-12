@@ -19,6 +19,15 @@ namespace Rabun.Oanda.Rest.Endpoints
             _accountId = accountId;
         }
 
+        /// <summary>
+        /// Get transaction history
+        /// </summary>
+        /// <param name="maxId">The first transaction to get. The server will return transactions with id less than or equal to this, in descending order</param>
+        /// <param name="minId">The last transaction to get. The server will return transactions with id greater or equal to this, in descending order</param>
+        /// <param name="count">The maximum number of transactions to return. The maximum value that can be specified is 500. By default, if count is not specified, a maximum of 50 transactions will be fetched. Note: Transactions requests with the count parameter specified is rate limited to 1 per every 60 seconds</param>
+        /// <param name="instrument">Retrieve transactions for a specific instrument only</param>
+        /// <param name="ids">An URL encoded comma (%2C) separated list of transaction ids to retrieve. Maximum number of ids: 50. No other parameter may be specified with the ids parameter</param>
+        /// <returns></returns>
         public async Task<List<Transaction>> GetTransactions(int? maxId, int? minId, int? count, string instrument, string ids)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
