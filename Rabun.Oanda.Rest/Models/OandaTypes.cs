@@ -70,7 +70,8 @@
         {
             CLIENT_REQUEST,
             MIGRATION,
-            REPLACES_ORDER
+            REPLACES_ORDER,
+            ORDER_FILLED
         }
 
         public enum CandleFormat

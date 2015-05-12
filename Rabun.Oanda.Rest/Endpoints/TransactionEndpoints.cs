@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
 using Rabun.Oanda.Rest.Base;
 using Rabun.Oanda.Rest.Models;
 
@@ -34,27 +31,141 @@ namespace Rabun.Oanda.Rest.Endpoints
             if (minId != null) properties.Add("minId", minId);
             if (!string.IsNullOrWhiteSpace(ids)) properties.Add("ids", ids);
 
-            JObject result = await Get<JObject>(routeParams, properties, _transactionsRoute);
-
-            OandaTypes.TransactionType type;
-            Enum.TryParse(result["transactions"].First["type"].Value<string>(), out type);
 
             List<Transaction> transactions = new List<Transaction>();
-            switch (type)
+            JObject result = await Get<JObject>(routeParams, properties, _transactionsRoute);
+
+            int countResult = result["transactions"].Count();
+            for (int i = 0; i < countResult; i++)
             {
-                case OandaTypes.TransactionType.MARKET_ORDER_CREATE:
-                    {
-                        List<TransactionMarketOrderCreate> transactionMarketOrderCreates =
-                            result.ToObject<List<TransactionMarketOrderCreate>>();
+                OandaTypes.TransactionType type;
+                Enum.TryParse(result["transactions"][i]["type"].Value<string>(), out type);
 
-                        transactions = transactionMarketOrderCreates.Cast<Transaction>().ToList();
+                switch (type)
+                {
+                    case OandaTypes.TransactionType.MARKET_ORDER_CREATE:
+                        {
 
-                        break;
-                    }
-                case OandaTypes.TransactionType.LIMIT_ORDER_CREATE:
-                    {
-                        break;
-                    }
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionMarketOrderCreate>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.LIMIT_ORDER_CREATE:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionLimitOrderCreate>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.ORDER_CANCEL:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionOrderCancel>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.MARKET_IF_TOUCHED_ORDER_CREATE:
+                        {
+
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionMarketIfTouchedCreate>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.ORDER_UPDATE:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionOrderUpdate>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.ORDER_FILLED:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionOrderFilled>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.TRADE_UPDATE:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionTradeUpdate>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.TRADE_CLOSE:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionTradeClose>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.MIGRATE_TRADE_OPEN:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionMigrateTradeOpen>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.MIGRATE_TRADE_CLOSE:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionMigrateTradeClose>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.STOP_LOSS_FILLED:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionStopLossField>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.TAKE_PROFIT_FILLED:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionTakeProfitField>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.TRAILING_STOP_FILLED:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionTrailingStopField>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.MARGIN_CALL_ENTER:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionMarginCallEnter>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.MARGIN_CALL_EXIT:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionMarginCallExit>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.MARGIN_CLOSEOUT:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionMarginCloseOut>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.SET_MARGIN_RATE:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionSatMarginRate>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.TRANSFER_FUNDS:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionTransferFounds>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.DAILY_INTEREST:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionDailyInterest>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                    case OandaTypes.TransactionType.FEE:
+                        {
+                            Transaction transaction = result["transactions"][i].ToObject<TransactionFee>();
+                            transactions.Add(transaction);
+                            break;
+                        }
+                }
             }
 
             return transactions;
