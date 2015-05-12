@@ -2,6 +2,6 @@
 {
     public class OrderMarketOpen: OrderOpen
     {
-        public OrderMarket TradeOpened { get; set; }
+        public TradeOpened TradeOpened { get; set; }
     }
 }
