@@ -121,7 +121,7 @@ namespace Rabun.Oanda.Rest.Endpoints
             routeParams.Add("accountId", _accountId.ToString());
             routeParams.Add("orderId", orderId.ToString());
 
-            Order order = await Get<Order>(routeParams, null, _ordersRoute);
+            Order order = await Get<Order>(routeParams, null, _orderRoute);
             return order;
         }
 
@@ -143,32 +143,33 @@ namespace Rabun.Oanda.Rest.Endpoints
         /// <param name="takeProfit">Optional The take profit price</param>
         /// <param name="trailingStop">Optional The trailing stop distance in pips, up to one decimal place</param>
         /// <returns></returns>
-        public async Task<Order> CreateOrder(string instrument, int units, OandaTypes.Side side,
+        public async Task<OrderOpen> CreateOrder(string instrument, int units, OandaTypes.Side side,
             OandaTypes.OrderType type, DateTime? expiry, float? price, float? lowerBound, float? upperBound, int? takeProfit, int? trailingStop)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
 
-            Dictionary<string, object> properties = new Dictionary<string, object>();
+            Dictionary<string, string> properties = new Dictionary<string, string>();
             properties.Add("instrument", instrument);
-            properties.Add("units", units);
-            properties.Add("side", side);
-            properties.Add("type", type);
+            properties.Add("units", units.ToString());
+            properties.Add("side", side.ToString());
+            properties.Add("type", type.ToString());
             if (expiry != null) properties.Add("expiry", expiry.Value.ToString("o"));
-            if (price != null) properties.Add("price", price);
-            if (lowerBound != null) properties.Add("lowerBound", lowerBound);
-            if (upperBound != null) properties.Add("upperBound", upperBound);
-            if (takeProfit != null) properties.Add("takeProfit", takeProfit);
-            if (trailingStop != null) properties.Add("trailingStop", trailingStop);
+            if (price != null) properties.Add("price", price.ToString());
+            if (lowerBound != null) properties.Add("lowerBound", lowerBound.ToString());
+            if (upperBound != null) properties.Add("upperBound", upperBound.ToString());
+            if (takeProfit != null) properties.Add("takeProfit", takeProfit.ToString());
+            if (trailingStop != null) properties.Add("trailingStop", trailingStop.ToString());
 
             if (type == OandaTypes.OrderType.market)
             {
-                OrderMarket orderMarket = await Post<OrderMarket>(routeParams, properties, _ordersRoute);
+                OrderMarketOpen orderMarket = await Post<OrderMarketOpen>(routeParams, properties, _ordersRoute);
                 return orderMarket;
             }
 
-            OrderMarketIfTouched orderMarketIfTouched = await Post<OrderMarketIfTouched>(routeParams, properties, _ordersRoute);
-            return orderMarketIfTouched;
+            //OrderMarketIfTouched orderMarketIfTouched = await Post<OrderMarketIfTouched>(routeParams, properties, _ordersRoute);
+            //return orderMarketIfTouched;
+            return null;
         }
 
         /// <summary>
@@ -183,11 +184,11 @@ namespace Rabun.Oanda.Rest.Endpoints
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
 
-            Dictionary<string, object> properties = new Dictionary<string, object>();
+            Dictionary<string, string> properties = new Dictionary<string, string>();
             properties.Add("instrument", instrument);
-            properties.Add("units", units);
-            properties.Add("side", side);
-            properties.Add("market", OandaTypes.OrderType.market);
+            properties.Add("units", units.ToString());
+            properties.Add("side", side.ToString());
+            properties.Add("market", OandaTypes.OrderType.market.ToString());
 
             OrderMarket orderMarket = await Post<OrderMarket>(routeParams, properties, _ordersRoute);
             return orderMarket;
@@ -207,13 +208,13 @@ namespace Rabun.Oanda.Rest.Endpoints
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
 
-            Dictionary<string, object> properties = new Dictionary<string, object>();
+            Dictionary<string, string> properties = new Dictionary<string, string>();
             properties.Add("instrument", instrument);
-            properties.Add("units", units);
-            properties.Add("side", side);
-            properties.Add("type", OandaTypes.OrderType.marketIfTouched);
+            properties.Add("units", units.ToString());
+            properties.Add("side", side.ToString());
+            properties.Add("type", OandaTypes.OrderType.marketIfTouched.ToString());
             properties.Add("expiry", expiry.ToString("o"));
-            properties.Add("price", price);
+            properties.Add("price", price.ToString());
 
             OrderMarketIfTouched orderMarketIfTouched = await Post<OrderMarketIfTouched>(routeParams, properties, _ordersRoute);
             return orderMarketIfTouched;

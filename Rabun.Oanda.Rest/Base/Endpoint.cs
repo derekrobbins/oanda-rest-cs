@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -63,13 +64,16 @@ namespace Rabun.Oanda.Rest.Base
                 string url = MakeUrl(MakeEndpoint(_accountType, route), routeParams);
 
                 StringBuilder sb = new StringBuilder(url);
-                sb.Append("?");
-                foreach (var p in properties)
-                {
-                    sb.AppendFormat("{0}={1}&", p.Key, Uri.EscapeDataString(p.Value.ToString()));
-                }
-                sb.Remove(sb.Length - 1, 1);
 
+                if (properties != null)
+                {
+                    sb.Append("?");
+                    foreach (var p in properties)
+                    {
+                        sb.AppendFormat("{0}={1}&", p.Key, Uri.EscapeDataString(p.Value.ToString()));
+                    }
+                    sb.Remove(sb.Length - 1, 1);
+                }
 
                 using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, sb.ToString()))
                 {
@@ -100,7 +104,7 @@ namespace Rabun.Oanda.Rest.Base
                 }
             }
         }
-        protected async Task<T> Post<T>(Dictionary<string, string> routeParams, Dictionary<string, object> properties, string route)
+        protected async Task<T> Post<T>(Dictionary<string, string> routeParams, Dictionary<string, string> properties, string route)
         {
             string url = MakeUrl(MakeEndpoint(_accountType, route), routeParams);
 
@@ -108,10 +112,8 @@ namespace Rabun.Oanda.Rest.Base
             {
                 using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url))
                 {
-                    foreach (KeyValuePair<string, object> property in properties)
-                    {
-                        request.Properties.Add(property);
-                    }
+                    FormUrlEncodedContent content = new FormUrlEncodedContent(properties.ToList());
+                    request.Content = content;
 
                     request.Headers.Add("Authorization", string.Format("Bearer {0}", _key));
 

@@ -57,6 +57,8 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderMarket.cs" />
     <Compile Include="Models\OrderMarketIfTouched .cs" />
+    <Compile Include="Models\OrderMarketOpen.cs" />
+    <Compile Include="Models\OrderOpen.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\PositionClosed.cs" />
     <Compile Include="Models\Price.cs" />
