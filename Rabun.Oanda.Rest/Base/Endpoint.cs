@@ -57,7 +57,7 @@ namespace Rabun.Oanda.Rest.Base
         }
 
 
-        protected async Task<T> Get<T>(Dictionary<string, string> routeParams, Dictionary<string, object> properties, string route)
+        protected async Task<T> Get<T>(Dictionary<string, string> routeParams, Dictionary<string, object> properties, string route) where T: class
         {
             using (HttpClient client = new HttpClient())
             {
@@ -85,8 +85,17 @@ namespace Rabun.Oanda.Rest.Base
                     if (response.IsSuccessStatusCode)
                     {
                         string str = await response.Content.ReadAsStringAsync();
-                        T result = JsonConvert.DeserializeObject<T>(str);
-                        return result;
+
+                        try
+                        {
+                            T result = JsonConvert.DeserializeObject<T>(str);
+                            return result;
+                        }
+                        catch (Exception e)
+                        {
+                            return null;
+                        }
+
                     }
                     else
                     {

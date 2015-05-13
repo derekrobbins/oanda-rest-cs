@@ -21,43 +21,45 @@ namespace Rabun.Oanda.Rest.Endpoints
 
         #region GetPositions
 
+        private class PositionsWrapper
+        {
+            public List<Position> Positions { get; set; }
+        }
+
         /// <summary>
         /// Get a list of all open positions
         /// </summary>
-        /// <param name="accountId">accountId account id</param>
         /// <returns>list of positions</returns>
-        public async Task<List<Position>> GetPositions(int accountId)
+        public async Task<List<Position>> GetPositions()
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
 
-            List<Position> result = await Get<List<Position>>(routeParams, null, _positionsRoute);
-            return result;
+            PositionsWrapper result = await Get<PositionsWrapper>(routeParams, null, _positionsRoute);
+            return result.Positions;
         }
 
         /// <summary>
         /// Get the position for an instrument
         /// </summary>
-        /// <param name="accountId">accountId account id</param>
         /// <param name="instrument">instrument</param>
         /// <returns>position</returns>
-        public async Task<Position> GetPosition(int accountId, string instrument)
+        public async Task<Position> GetPosition(string instrument)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
             routeParams.Add("instrument", instrument);
 
-            Position result = await Get<Position>(routeParams, null, _positionsRoute);
+            Position result = await Get<Position>(routeParams, null, _positionRoute);
             return result;
         }
 
         /// <summary>
         /// Close an existing position
         /// </summary>
-        /// <param name="accountId">accountId account id</param>
         /// <param name="instrument">instrument instrument</param>
         /// <returns></returns>
-        public async Task<PositionClosed> ClosePosition(int accountId, string instrument)
+        public async Task<PositionClosed> ClosePosition(string instrument)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
