@@ -49,7 +49,7 @@ namespace Rabun.Oanda.Rest.Test.Endpoints
             List<Order> orders = await _orderEndpoints.GetOrders("EUR_USD", 5, null, null);
             Assert.IsNotNull(orders);
             Assert.IsTrue(orders.Count == 3);
-        } 
+        }
 
         #endregion
 
@@ -69,8 +69,43 @@ namespace Rabun.Oanda.Rest.Test.Endpoints
         [TestMethod]
         public async Task CreateOrderTest()
         {
-            OrderOpen order = await _orderEndpoints.CreateOrder("EUR_USD", 555, OandaTypes.Side.buy, OandaTypes.OrderType.market,
-                null, null, null, null, null, null);
+            OrderOpen order = await _orderEndpoints.CreateOrder("EUR_USD", 777, OandaTypes.Side.buy, OandaTypes.OrderType.marketIfTouched, DateTime.Now.AddDays(1), 1.1630f, null, null, null, null);
+            Assert.IsNotNull(order);
+        }
+
+        [TestMethod]
+        public async Task CreateMarketOrderTest()
+        {
+            OrderOpen order = await _orderEndpoints.CreateMarketOrder("EUR_USD", 999, OandaTypes.Side.buy);
+            Assert.IsNotNull(order);
+        }
+
+        [TestMethod]
+        public async Task CreateMarketIfTouchedOrderTest()
+        {
+            OrderOpen order = await _orderEndpoints.CreateMarketIfTouchedOrder("EUR_USD", 999, OandaTypes.Side.buy, DateTime.Now.AddDays(1), 1.4f);
+            Assert.IsNotNull(order);
+        }
+
+        #endregion
+
+        #region UpdateOrderTest
+
+        [TestMethod]
+        public async Task UpdateOrderTest()
+        {
+            OrderMarketIfTouched order = await _orderEndpoints.UpdateOrder(965436841, 333, 1.1f, null, null, null, null, null, null);
+            Assert.IsNotNull(order);
+        }
+
+        #endregion
+
+        #region CloseOrderTest
+
+        [TestMethod]
+        public async Task CloseOrder()
+        {
+            OrderClosed order = await _orderEndpoints.CloseOrder(965875303);
             Assert.IsNotNull(order);
         }
 

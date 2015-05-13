@@ -135,10 +135,10 @@ namespace Rabun.Oanda.Rest.Endpoints
             routeParams.Add("accountId", _accountId.ToString());
             routeParams.Add("tradeId", tradeId.ToString());
 
-            Dictionary<string, object> properties = new Dictionary<string, object>();
-            if (stopLoss != null) properties.Add("stopLoss", stopLoss);
-            if (takeProfit != null) properties.Add("takeProfit", takeProfit);
-            if (trailingStop != null) properties.Add("trailingStop", trailingStop);
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+            if (stopLoss != null) properties.Add("stopLoss", stopLoss.ToString());
+            if (takeProfit != null) properties.Add("takeProfit", takeProfit.ToString());
+            if (trailingStop != null) properties.Add("trailingStop", trailingStop.ToString());
 
             Trade trade = await Patch<Trade>(routeParams, properties, _tradeRoute);
             return trade;

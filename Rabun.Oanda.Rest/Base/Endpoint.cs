@@ -141,7 +141,7 @@ namespace Rabun.Oanda.Rest.Base
                 }
             }
         }
-        protected async Task<T> Patch<T>(Dictionary<string, string> routeParams, Dictionary<string, object> properties, string route)
+        protected async Task<T> Patch<T>(Dictionary<string, string> routeParams, Dictionary<string, string> properties, string route)
         {
             string url = MakeUrl(MakeEndpoint(_accountType, route), routeParams);
 
@@ -149,10 +149,8 @@ namespace Rabun.Oanda.Rest.Base
             {
                 using (HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("PATCH"), url))
                 {
-                    foreach (KeyValuePair<string, object> property in properties)
-                    {
-                        request.Properties.Add(property);
-                    }
+                    FormUrlEncodedContent content = new FormUrlEncodedContent(properties.ToList());
+                    request.Content = content;
 
                     request.Headers.Add("Authorization", string.Format("Bearer {0}", _key));
 

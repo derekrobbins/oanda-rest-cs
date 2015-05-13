@@ -55,10 +55,13 @@
     <Compile Include="Models\InstrumentModel.cs" />
     <Compile Include="Models\OandaTypes.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderClosed.cs" />
     <Compile Include="Models\OrderMarket.cs" />
     <Compile Include="Models\OrderMarketIfTouched .cs" />
+    <Compile Include="Models\OrderMarketIfTouchedOpen.cs" />
     <Compile Include="Models\OrderMarketOpen.cs" />
     <Compile Include="Models\OrderOpen.cs" />
+    <Compile Include="Models\OrderOpened.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\PositionClosed.cs" />
     <Compile Include="Models\Price.cs" />
