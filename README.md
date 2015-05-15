@@ -9,7 +9,9 @@ Below you will find a detailed description of working with our wrapper.
 #Support tech
 
 This is a portable .NET library. You can use it with: Windows 8/10, Windows Phone,
-WPF, ASP.NET, ASP.NET 5 DNX, Windows Forns, Mono.
+WPF, ASP.NET, Windows Forms.
+
+WARNING! This library doesn't support Windows 10 Universal App now. Windows Universal App support coming soon.
 
 #How to install library
 
