@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>oanda-rest-cs by rabun</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">oanda-rest-cs</h1>
+      <h2 class="project-tagline">Oanda REST api wrapper for C# (http://www.oanda.com/)</h2>
+      <a href="https://github.com/rabun/oanda-rest-cs" class="btn">View on GitHub</a>
+      <a href="https://github.com/rabun/oanda-rest-cs/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/rabun/oanda-rest-cs/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="welcome-to-rabun-wrapper-for-oanda-rest-api" class="anchor" href="#welcome-to-rabun-wrapper-for-oanda-rest-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Rabun wrapper for OANDA REST API</h1>
+
+<p><img src="/RoboTrade.png" alt="Title img"></p>
+
+<p>Hi! We offer you to use our wrapper for the oanda rest api in C#. 
+We tried to implement most of the features of oanda rest api and 
+provide you with a convenient C# interface.</p>
+
+<p>Below you will find a detailed description of working with our wrapper.</p>
+
+<h1>
+<a id="support-tech" class="anchor" href="#support-tech" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support tech</h1>
+
+<p>This is a portable .NET library. You can use it with: Windows 8/10, Windows Phone,
+WPF, ASP.NET, Windows Forms.</p>
+
+<p>WARNING! This library doesn't support Windows 10 Universal App now. Windows Universal App support coming soon.</p>
+
+<h1>
+<a id="how-to-install-library" class="anchor" href="#how-to-install-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to install library</h1>
+
+<p>You can build the library or download the package using nuget. You need Visual Studio
+2013 or later.</p>
+
+<h3>
+<a id="build-library-from-source" class="anchor" href="#build-library-from-source" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build library from source</h3>
+
+<p>Get source code from github. You can use release (stable version) or master branch
+with latest futures, but master sourse may not work.</p>
+
+<p>Open solution at your Visual Studio and run build. All projects must build success.</p>
+
+<h3>
+<a id="get-library-from-nuget-package" class="anchor" href="#get-library-from-nuget-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get library from NuGet package</h3>
+
+<p>Open NuGet Package Manager console at your Visual Studio and run this command:</p>
+
+<pre><code>PM&gt; Install-Package Rabun.Oanda.Rest.Cs
+</code></pre>
+
+<h3>
+<a id="tests" class="anchor" href="#tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tests</h3>
+
+<p>You can run Integration and Unit tests. WARNING! You can use own account information:
+securiry key, accountId. Don't forget change Asserts at tests for your trading.</p>
+
+<h1>
+<a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use it</h1>
+
+<p>To start working with services OANDA you need to create an instance of the class 
+xxxEndpoints. Where xxx is the name of the operations you want to perform.</p>
+
+<p>You can use Endpoints class:</p>
+
+<div class="highlight highlight-csharp"><pre>OrderEndpoints orderEndpoints = <span class="pl-k">new</span> OrderEndpoints(<span class="pl-s"><span class="pl-pds">"</span>ec89b162d4a9922c8fa40769c2453d8b-cc1fb522857d46a08a90ef09730343a6<span class="pl-pds">"</span></span>, AccountType.practice, <span class="pl-c1">4905675</span>);
+List&lt;Order&gt; orders = <span class="pl-k">await</span> orderEndpoints.GetOrders();</pre></div>
+
+<p>or use fabric:</p>
+
+<div class="highlight highlight-csharp"><pre>DefaultFactory factory = <span class="pl-k">new</span> DefaultFactory(<span class="pl-s"><span class="pl-pds">"</span>ec89b162d4a9922c8fa40769c2453d8b-cc1fb522857d46a08a90ef09730343a6<span class="pl-pds">"</span></span>, AccountType.practice, <span class="pl-c1">4905675</span>);
+RateEndpoints rateEndpoints = factory.GetEndpoint&lt;RateEndpoints&gt;();
+
+List&lt;Price&gt; prices = <span class="pl-k">await</span> rateEndpoints.GetPrices(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>);</pre></div>
+
+<p>The DefaultFactory provide instances for all xxxEndpoints. Using Factory pattern is
+the best way to work with this api.</p>
+
+<h1>
+<a id="implementation" class="anchor" href="#implementation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Implementation</h1>
+
+<p>Now implement these services:</p>
+
+<ul>
+<li>OrderEndpoints</li>
+<li>PositionEndpoints</li>
+<li>RateEndpoints</li>
+<li>TradeEndpoints</li>
+<li>TransactionEndpoints</li>
+</ul>
+
+<p>More information about this services you can find at <a href="http://developer.oanda.com/rest-live/introduction/">http://developer.oanda.com/rest-live/introduction/</a></p>
+
+<h1>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h1>
+
+<h2>
+<a id="orders" class="anchor" href="#orders" aria-hidden="true"><span class="octicon octicon-link"></span></a>Orders</h2>
+
+<h5>
+<a id="getorders" class="anchor" href="#getorders" aria-hidden="true"><span class="octicon octicon-link"></span></a>GetOrders</h5>
+
+<div class="highlight highlight-csharp"><pre>List&lt;Order&gt; orders = <span class="pl-k">await</span> _orderEndpoints.GetOrders();</pre></div>
+
+<div class="highlight highlight-csharp"><pre>List&lt;Order&gt; orders = <span class="pl-k">await</span> _orderEndpoints.GetOrders(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>List&lt;Order&gt; orders = <span class="pl-k">await</span> _orderEndpoints.GetOrders(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>List&lt;Order&gt; orders = <span class="pl-k">await</span> _orderEndpoints.GetOrders(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>, <span class="pl-c1">null</span>, <span class="pl-c1">null</span>);</pre></div>
+
+<h5>
+<a id="getorder" class="anchor" href="#getorder" aria-hidden="true"><span class="octicon octicon-link"></span></a>GetOrder</h5>
+
+<div class="highlight highlight-csharp"><pre>Order order = <span class="pl-k">await</span> _orderEndpoints.GetOrder(<span class="pl-c1">965436841</span>);</pre></div>
+
+<h5>
+<a id="createorder" class="anchor" href="#createorder" aria-hidden="true"><span class="octicon octicon-link"></span></a>CreateOrder</h5>
+
+<div class="highlight highlight-csharp"><pre>OrderOpen order = <span class="pl-k">await</span> _orderEndpoints.CreateOrder(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, <span class="pl-c1">777</span>, OandaTypes.Side.buy, OandaTypes.OrderType.marketIfTouched, DateTime.Now.AddDays(<span class="pl-c1">1</span>), <span class="pl-c1">1.1630f</span>, <span class="pl-c1">null</span>, <span class="pl-c1">null</span>, <span class="pl-c1">null</span>, <span class="pl-c1">null</span>);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>OrderOpen order = <span class="pl-k">await</span> _orderEndpoints.CreateMarketOrder(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, <span class="pl-c1">999</span>, OandaTypes.Side.buy);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>OrderOpen order = <span class="pl-k">await</span> _orderEndpoints.CreateMarketIfTouchedOrder(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, <span class="pl-c1">999</span>, OandaTypes.Side.buy, DateTime.Now.AddDays(<span class="pl-c1">1</span>), <span class="pl-c1">1.4f</span>);</pre></div>
+
+<h5>
+<a id="updateorder" class="anchor" href="#updateorder" aria-hidden="true"><span class="octicon octicon-link"></span></a>UpdateOrder</h5>
+
+<div class="highlight highlight-csharp"><pre>OrderMarketIfTouched order = <span class="pl-k">await</span> _orderEndpoints.UpdateOrder(<span class="pl-c1">965436841</span>, <span class="pl-c1">333</span>, <span class="pl-c1">1.1f</span>, <span class="pl-c1">null</span>, <span class="pl-c1">null</span>, <span class="pl-c1">null</span>, <span class="pl-c1">null</span>, <span class="pl-c1">null</span>, <span class="pl-c1">null</span>);</pre></div>
+
+<h5>
+<a id="closeorder" class="anchor" href="#closeorder" aria-hidden="true"><span class="octicon octicon-link"></span></a>CloseOrder</h5>
+
+<div class="highlight highlight-csharp"><pre>OrderClosed order = <span class="pl-k">await</span> _orderEndpoints.CloseOrder(<span class="pl-c1">965875303</span>);</pre></div>
+
+<h2>
+<a id="rates" class="anchor" href="#rates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rates</h2>
+
+<h5>
+<a id="getinstruments" class="anchor" href="#getinstruments" aria-hidden="true"><span class="octicon octicon-link"></span></a>GetInstruments</h5>
+
+<div class="highlight highlight-csharp"><pre>List&lt;InstrumentModel&gt; instruments = <span class="pl-k">await</span> _rateEndpoints.GetInstruments();</pre></div>
+
+<div class="highlight highlight-csharp"><pre>List&lt;InstrumentModel&gt; instruments = <span class="pl-k">await</span> _rateEndpoints.GetInstruments(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD,CHF_JPY<span class="pl-pds">"</span></span>);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>List&lt;InstrumentModel&gt; instruments = <span class="pl-k">await</span> _rateEndpoints.GetInstruments(<span class="pl-s"><span class="pl-pds">"</span>instrument<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>);</pre></div>
+
+<h5>
+<a id="getprices" class="anchor" href="#getprices" aria-hidden="true"><span class="octicon octicon-link"></span></a>GetPrices</h5>
+
+<div class="highlight highlight-csharp"><pre>List&lt;Price&gt; prices = <span class="pl-k">await</span> _rateEndpoints.GetPrices(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD,CHF_JPY<span class="pl-pds">"</span></span>);</pre></div>
+
+<h5>
+<a id="getcandles" class="anchor" href="#getcandles" aria-hidden="true"><span class="octicon octicon-link"></span></a>GetCandles</h5>
+
+<div class="highlight highlight-csharp"><pre>Candle&lt;CandleBidAsk&gt; candle = <span class="pl-k">await</span> _rateEndpoints.GetCandles(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>Candle&lt;CandleBidAsk&gt; candle = <span class="pl-k">await</span> _rateEndpoints.GetCandles(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, OandaTypes.GranularityType.D);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>Candle&lt;CandleBidAsk&gt; candle = <span class="pl-k">await</span> _rateEndpoints.GetCandles(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, OandaTypes.GranularityType.M, <span class="pl-c1">10</span>);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>DateTime start = DateTime.UtcNow.AddDays(-<span class="pl-c1">1</span>);
+DateTime end = DateTime.UtcNow;
+
+Candle&lt;CandleBidAsk&gt; candle = <span class="pl-k">await</span> _rateEndpoints.GetCandles(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, OandaTypes.GranularityType.H1, start, end);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>Candle&lt;CandleMid&gt; candle = <span class="pl-k">await</span> _rateEndpoints.GetCandlesMid(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>Candle&lt;CandleMid&gt; candle = <span class="pl-k">await</span> _rateEndpoints.GetCandlesMid(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, OandaTypes.GranularityType.D);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>Candle&lt;CandleMid&gt; candle = <span class="pl-k">await</span> _rateEndpoints.GetCandlesMid(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, OandaTypes.GranularityType.M, <span class="pl-c1">10</span>);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>DateTime start = DateTime.UtcNow.AddDays(-<span class="pl-c1">1</span>);
+DateTime end = DateTime.UtcNow;
+
+Candle&lt;CandleMid&gt; candle = <span class="pl-k">await</span> _rateEndpoints.GetCandlesMid(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, OandaTypes.GranularityType.H1, start, end);</pre></div>
+
+<div class="highlight highlight-csharp"><pre><span class="pl-k">object</span> candle =
+    <span class="pl-k">await</span>
+        _rateEndpoints.GetCandles(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, OandaTypes.GranularityType.M, <span class="pl-c1">100</span>,
+            OandaTypes.CandleFormat.bidask,
+            <span class="pl-c1">true</span>, <span class="pl-c1">null</span>, OandaTypes.WeeklyAlignment.Friday);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>DateTime start = DateTime.UtcNow.AddDays(-<span class="pl-c1">1</span>);
+DateTime end = DateTime.UtcNow;
+
+<span class="pl-k">object</span> candle =
+    <span class="pl-k">await</span>
+        _rateEndpoints.GetCandles(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, OandaTypes.GranularityType.M, start, end,
+            OandaTypes.CandleFormat.midpoint,
+            <span class="pl-c1">true</span>, <span class="pl-c1">null</span>, OandaTypes.WeeklyAlignment.Friday);</pre></div>
+
+<h2>
+<a id="trades" class="anchor" href="#trades" aria-hidden="true"><span class="octicon octicon-link"></span></a>Trades</h2>
+
+<h5>
+<a id="gettrades" class="anchor" href="#gettrades" aria-hidden="true"><span class="octicon octicon-link"></span></a>GetTrades</h5>
+
+<div class="highlight highlight-csharp"><pre>List&lt;Trade&gt; trades = <span class="pl-k">await</span> _tradeEndpoints.GetTrades();</pre></div>
+
+<div class="highlight highlight-csharp"><pre>List&lt;Trade&gt; trades = <span class="pl-k">await</span> _tradeEndpoints.GetTrades(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>List&lt;Trade&gt; trades = <span class="pl-k">await</span> _tradeEndpoints.GetTrades(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, <span class="pl-c1">100</span>);</pre></div>
+
+<div class="highlight highlight-csharp"><pre>List&lt;Trade&gt; trades = <span class="pl-k">await</span> _tradeEndpoints.GetTrades(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, <span class="pl-c1">100</span>, <span class="pl-c1">null</span>, <span class="pl-c1">null</span>);</pre></div>
+
+<h5>
+<a id="gettrade" class="anchor" href="#gettrade" aria-hidden="true"><span class="octicon octicon-link"></span></a>GetTrade</h5>
+
+<div class="highlight highlight-csharp"><pre>Trade trade = <span class="pl-k">await</span> _tradeEndpoints.GetTrade(<span class="pl-c1">968541259</span>);</pre></div>
+
+<h5>
+<a id="updatetrade" class="anchor" href="#updatetrade" aria-hidden="true"><span class="octicon octicon-link"></span></a>UpdateTrade</h5>
+
+<div class="highlight highlight-csharp"><pre>Trade trade = <span class="pl-k">await</span> _tradeEndpoints.UpdateTrade(<span class="pl-c1">968541259</span>, <span class="pl-c1">null</span>, <span class="pl-c1">1.29f</span>, <span class="pl-c1">null</span>);</pre></div>
+
+<h5>
+<a id="closetrade" class="anchor" href="#closetrade" aria-hidden="true"><span class="octicon octicon-link"></span></a>CloseTrade</h5>
+
+<div class="highlight highlight-csharp"><pre>TradeClosed trade = <span class="pl-k">await</span> _tradeEndpoints.CloseTrade(<span class="pl-c1">968541259</span>);</pre></div>
+
+<h2>
+<a id="positions" class="anchor" href="#positions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Positions</h2>
+
+<h5>
+<a id="getpositions" class="anchor" href="#getpositions" aria-hidden="true"><span class="octicon octicon-link"></span></a>GetPositions</h5>
+
+<div class="highlight highlight-csharp"><pre>List&lt;Position&gt; positions = <span class="pl-k">await</span> _positionEndpoints.GetPositions();</pre></div>
+
+<h5>
+<a id="getposition" class="anchor" href="#getposition" aria-hidden="true"><span class="octicon octicon-link"></span></a>GetPosition</h5>
+
+<div class="highlight highlight-csharp"><pre>Position position = <span class="pl-k">await</span> _positionEndpoints.GetPosition(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>);</pre></div>
+
+<h5>
+<a id="closeposition" class="anchor" href="#closeposition" aria-hidden="true"><span class="octicon octicon-link"></span></a>ClosePosition</h5>
+
+<div class="highlight highlight-csharp"><pre>PositionClosed position = <span class="pl-k">await</span> _positionEndpoints.ClosePosition(<span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>);</pre></div>
+
+<h2>
+<a id="transactions" class="anchor" href="#transactions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transactions</h2>
+
+<h5>
+<a id="gettransactions" class="anchor" href="#gettransactions" aria-hidden="true"><span class="octicon octicon-link"></span></a>GetTransactions</h5>
+
+<div class="highlight highlight-csharp"><pre>List&lt;Transaction&gt; transactions = <span class="pl-k">await</span> _transactionEndpoints.GetTransactions(<span class="pl-c1">null</span>, <span class="pl-c1">null</span>, <span class="pl-c1">null</span>, <span class="pl-s"><span class="pl-pds">"</span>EUR_USD<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>);</pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/rabun/oanda-rest-cs">oanda-rest-cs</a> is maintained by <a href="https://github.com/rabun">rabun</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
