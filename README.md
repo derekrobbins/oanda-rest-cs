@@ -73,7 +73,7 @@ More information about this services you can find at http://developer.oanda.com/
 
 #Examples
 
-###Orders
+##Orders
 
 #####GetOrders
 
@@ -94,6 +94,7 @@ List<Order> orders = await _orderEndpoints.GetOrders("EUR_USD", 5, null, null);
 ```
 
 #####GetOrder
+
 ```csharp
 Order order = await _orderEndpoints.GetOrder(965436841);
 ```
@@ -112,19 +113,21 @@ OrderOpen order = await _orderEndpoints.CreateMarketOrder("EUR_USD", 999, OandaT
 OrderOpen order = await _orderEndpoints.CreateMarketIfTouchedOrder("EUR_USD", 999, OandaTypes.Side.buy, DateTime.Now.AddDays(1), 1.4f);
 ```
 
-####UpdateOrder
+#####UpdateOrder
+
 ```csharp
 OrderMarketIfTouched order = await _orderEndpoints.UpdateOrder(965436841, 333, 1.1f, null, null, null, null, null, null);
 ```
 
-####CloseOrder
+#####CloseOrder
+
 ```csharp
 OrderClosed order = await _orderEndpoints.CloseOrder(965875303);
 ```
 
-###Rates
+##Rates
 
-####GetInstruments
+#####GetInstruments
 
 ```csharp
 List<InstrumentModel> instruments = await _rateEndpoints.GetInstruments();
@@ -138,12 +141,14 @@ List<InstrumentModel> instruments = await _rateEndpoints.GetInstruments("EUR_USD
 List<InstrumentModel> instruments = await _rateEndpoints.GetInstruments("instrument", "EUR_USD");
 ```
 
-####GetPrices
+#####GetPrices
+
 ```csharp
 List<Price> prices = await _rateEndpoints.GetPrices("EUR_USD,CHF_JPY");
 ```
 
-####GetCandles
+#####GetCandles
+
 ```csharp
 Candle<CandleBidAsk> candle = await _rateEndpoints.GetCandles("EUR_USD");
 ```
@@ -199,4 +204,70 @@ object candle =
         _rateEndpoints.GetCandles("EUR_USD", OandaTypes.GranularityType.M, start, end,
             OandaTypes.CandleFormat.midpoint,
             true, null, OandaTypes.WeeklyAlignment.Friday);
+```
+
+##Trades
+
+#####GetTrades
+
+```csharp
+List<Trade> trades = await _tradeEndpoints.GetTrades();
+```
+
+```csharp
+List<Trade> trades = await _tradeEndpoints.GetTrades("EUR_USD");
+```
+
+```csharp
+List<Trade> trades = await _tradeEndpoints.GetTrades("EUR_USD", 100);
+```
+
+```csharp
+List<Trade> trades = await _tradeEndpoints.GetTrades("EUR_USD", 100, null, null);
+```
+
+#####GetTrade
+
+```csharp
+Trade trade = await _tradeEndpoints.GetTrade(968541259);
+```
+
+#####UpdateTrade
+
+```csharp
+Trade trade = await _tradeEndpoints.UpdateTrade(968541259, null, 1.29f, null);
+```
+
+#####CloseTrade
+
+```csharp
+TradeClosed trade = await _tradeEndpoints.CloseTrade(968541259);
+```
+
+##Positions
+
+#####GetPositions
+
+```csharp
+List<Position> positions = await _positionEndpoints.GetPositions();
+```
+
+#####GetPosition
+
+```csharp
+Position position = await _positionEndpoints.GetPosition("EUR_USD");
+```
+
+#####ClosePosition
+
+```csharp
+PositionClosed position = await _positionEndpoints.ClosePosition("EUR_USD");
+```
+
+##Transactions
+
+#####GetTransactions
+
+```csharp
+List<Transaction> transactions = await _transactionEndpoints.GetTransactions(null, null, null, "EUR_USD", "");
 ```
