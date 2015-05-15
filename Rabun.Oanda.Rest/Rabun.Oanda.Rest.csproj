@@ -40,7 +40,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <Folder Include="Factories\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\AccountType.cs" />
@@ -50,6 +49,7 @@
     <Compile Include="Endpoints\RateEndpoints.cs" />
     <Compile Include="Endpoints\TradeEndpoints.cs" />
     <Compile Include="Endpoints\TransactionEndpoints.cs" />
+    <Compile Include="Factories\DefaultFactory.cs" />
     <Compile Include="Models\Candle.cs" />
     <Compile Include="Models\CandleBidAsk.cs" />
     <Compile Include="Models\CandleMid.cs" />
