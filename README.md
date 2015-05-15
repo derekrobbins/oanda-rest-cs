@@ -75,7 +75,7 @@ More information about this services you can find at http://developer.oanda.com/
 
 ###Orders
 
-####GetOrders
+#####GetOrders
 
 ```csharp
 List<Order> orders = await _orderEndpoints.GetOrders();
@@ -93,12 +93,12 @@ List<Order> orders = await _orderEndpoints.GetOrders("EUR_USD", 5);
 List<Order> orders = await _orderEndpoints.GetOrders("EUR_USD", 5, null, null);
 ```
 
-####GetOrder
+#####GetOrder
 ```csharp
 Order order = await _orderEndpoints.GetOrder(965436841);
 ```
 
-####CreateOrder
+#####CreateOrder
 
 ```csharp
 OrderOpen order = await _orderEndpoints.CreateOrder("EUR_USD", 777, OandaTypes.Side.buy, OandaTypes.OrderType.marketIfTouched, DateTime.Now.AddDays(1), 1.1630f, null, null, null, null);
