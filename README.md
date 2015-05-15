@@ -71,4 +71,54 @@ Now implement these services:
 
 More information about this services you can find at http://developer.oanda.com/rest-live/introduction/
 
+#Examples
+
+##Orders
+
+###GetOrders
+
+```csharp
+List<Order> orders = await _orderEndpoints.GetOrders();
+```
+
+```csharp
+List<Order> orders = await _orderEndpoints.GetOrders("EUR_USD");
+```
+
+```csharp
+List<Order> orders = await _orderEndpoints.GetOrders("EUR_USD", 5);
+```
+
+```csharp
+List<Order> orders = await _orderEndpoints.GetOrders("EUR_USD", 5, null, null);
+```
+
+###GetOrder
+```csharp
+Order order = await _orderEndpoints.GetOrder(965436841);
+```
+
+###CreateOrder
+
+```csharp
+OrderOpen order = await _orderEndpoints.CreateOrder("EUR_USD", 777, OandaTypes.Side.buy, OandaTypes.OrderType.marketIfTouched, DateTime.Now.AddDays(1), 1.1630f, null, null, null, null);
+```
+
+```csharp
+OrderOpen order = await _orderEndpoints.CreateMarketOrder("EUR_USD", 999, OandaTypes.Side.buy);
+```
+
+```csharp
+OrderOpen order = await _orderEndpoints.CreateMarketIfTouchedOrder("EUR_USD", 999, OandaTypes.Side.buy, DateTime.Now.AddDays(1), 1.4f);
+```
+
+###UpdateOrder
+```csharp
+OrderMarketIfTouched order = await _orderEndpoints.UpdateOrder(965436841, 333, 1.1f, null, null, null, null, null, null);
+```
+
+###CloseOrder
+```csharp
+OrderClosed order = await _orderEndpoints.CloseOrder(965875303);
+```
 
