@@ -21,6 +21,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C771A72D-A069-41EE-97C2-EA272AFA83EB}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		..\..\..\Desktop\RoboTrade.png = ..\..\..\Desktop\RoboTrade.png
 	EndProjectSection
 EndProject
 Global
