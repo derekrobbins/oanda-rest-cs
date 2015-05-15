@@ -12,6 +12,12 @@ namespace Rabun.Oanda.Rest.Endpoints
         private readonly string _orderRoute = "/v1/accounts/:accountId/orders/:orderId";
         private readonly int _accountId;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrderEndpoints"/> class.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="accountType">Type of the account.</param>
+        /// <param name="accountId">The account identifier.</param>
         public OrderEndpoints(string key, AccountType accountType, int accountId)
             : base(key, accountType)
         {
