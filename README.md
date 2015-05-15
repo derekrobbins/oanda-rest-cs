@@ -16,14 +16,14 @@ WPF, ASP.NET, ASP.NET 5 DNX, Windows Forns, Mono.
 You can build the library or download the package using nuget. You need Visual Studio
 2013 or later.
 
-##Build library from source
+###Build library from source
 
 Get source code from github. You can use release (stable version) or master branch
 with latest futures, but master sourse may not work.
 
 Open solution at your Visual Studio and run build. All projects must build success.
 
-##Get library from NuGet package
+###Get library from NuGet package
 
 Open NuGet Package Manager console at your Visual Studio and run this command:
 
@@ -31,7 +31,7 @@ Open NuGet Package Manager console at your Visual Studio and run this command:
 PM> Install-Package Rabun.Oanda.Rest.Cs
 ```
 
-## Tests
+### Tests
 
 You can run Integration and Unit tests. WARNING! You can use own account information:
 securiry key, accountId. Don't forget change Asserts at tests for your trading.
@@ -73,7 +73,7 @@ More information about this services you can find at http://developer.oanda.com/
 
 #Examples
 
-##Orders
+###Orders
 
 ####GetOrders
 
@@ -122,3 +122,81 @@ OrderMarketIfTouched order = await _orderEndpoints.UpdateOrder(965436841, 333, 1
 OrderClosed order = await _orderEndpoints.CloseOrder(965875303);
 ```
 
+###Rates
+
+####GetInstruments
+
+```csharp
+List<InstrumentModel> instruments = await _rateEndpoints.GetInstruments();
+```
+
+```csharp
+List<InstrumentModel> instruments = await _rateEndpoints.GetInstruments("EUR_USD,CHF_JPY");
+```
+
+```csharp
+List<InstrumentModel> instruments = await _rateEndpoints.GetInstruments("instrument", "EUR_USD");
+```
+
+####GetPrices
+```csharp
+List<Price> prices = await _rateEndpoints.GetPrices("EUR_USD,CHF_JPY");
+```
+
+####GetCandles
+```csharp
+Candle<CandleBidAsk> candle = await _rateEndpoints.GetCandles("EUR_USD");
+```
+
+```csharp
+Candle<CandleBidAsk> candle = await _rateEndpoints.GetCandles("EUR_USD", OandaTypes.GranularityType.D);
+```
+
+```csharp
+Candle<CandleBidAsk> candle = await _rateEndpoints.GetCandles("EUR_USD", OandaTypes.GranularityType.M, 10);
+```
+
+```csharp
+DateTime start = DateTime.UtcNow.AddDays(-1);
+DateTime end = DateTime.UtcNow;
+
+Candle<CandleBidAsk> candle = await _rateEndpoints.GetCandles("EUR_USD", OandaTypes.GranularityType.H1, start, end);
+```
+
+```csharp
+Candle<CandleMid> candle = await _rateEndpoints.GetCandlesMid("EUR_USD");
+```
+
+```csharp
+Candle<CandleMid> candle = await _rateEndpoints.GetCandlesMid("EUR_USD", OandaTypes.GranularityType.D);
+```
+
+```csharp
+Candle<CandleMid> candle = await _rateEndpoints.GetCandlesMid("EUR_USD", OandaTypes.GranularityType.M, 10);
+```
+
+```csharp
+DateTime start = DateTime.UtcNow.AddDays(-1);
+DateTime end = DateTime.UtcNow;
+
+Candle<CandleMid> candle = await _rateEndpoints.GetCandlesMid("EUR_USD", OandaTypes.GranularityType.H1, start, end);
+```
+
+```csharp
+object candle =
+    await
+        _rateEndpoints.GetCandles("EUR_USD", OandaTypes.GranularityType.M, 100,
+            OandaTypes.CandleFormat.bidask,
+            true, null, OandaTypes.WeeklyAlignment.Friday);
+```
+
+```csharp
+DateTime start = DateTime.UtcNow.AddDays(-1);
+DateTime end = DateTime.UtcNow;
+
+object candle =
+    await
+        _rateEndpoints.GetCandles("EUR_USD", OandaTypes.GranularityType.M, start, end,
+            OandaTypes.CandleFormat.midpoint,
+            true, null, OandaTypes.WeeklyAlignment.Friday);
+```
