@@ -15,7 +15,7 @@ namespace Rabun.Oanda.Rest.Test.Endpoints
         private readonly RateEndpoints _rateEndpoints;
         public RateEndpointsTest()
         {
-            _rateEndpoints = new RateEndpoints("ec89b162d4a9922c8fa40769c2453d8b-cc1fb522857d46a08a90ef09730343a6", AccountType.practice, 4905675);
+            _rateEndpoints = new RateEndpoints("59026b50358c8f948391ab5110ad42b4-6e8cc7fbbc6879c170bfa65d8a0b136b", AccountType.practice, 4905675);
         }
 
         #region GetInstrumentsTest
@@ -110,7 +110,7 @@ namespace Rabun.Oanda.Rest.Test.Endpoints
         [TestMethod]
         public async Task GetCandlesMidByInstrumentAndGranuariryTest()
         {
-            Candle<CandleMid> candle = await _rateEndpoints.GetCandlesMid("EUR_USD", OandaTypes.GranularityType.D);
+            Candle<CandleMid> candle = await _rateEndpoints.GetCandlesMid("EUR_USD", OandaTypes.GranularityType.S5);
             Assert.IsNotNull(candle);
             Assert.IsTrue(candle.Candles.Count > 0);
         }

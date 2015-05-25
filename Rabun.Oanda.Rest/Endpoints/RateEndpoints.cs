@@ -131,6 +131,7 @@ namespace Rabun.Oanda.Rest.Endpoints
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("instrument", instrument);
+            properties.Add("candleFormat", OandaTypes.CandleFormat.bidask);
 
             Candle<CandleBidAsk> result = await Get<Candle<CandleBidAsk>>(null, properties, _candleRoute);
             return result;
@@ -153,6 +154,7 @@ namespace Rabun.Oanda.Rest.Endpoints
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("instrument", instrument);
             properties.Add("granularity", granularity);
+            properties.Add("candleFormat", OandaTypes.CandleFormat.bidask);
 
             Candle<CandleBidAsk> result = await Get<Candle<CandleBidAsk>>(null, properties, _candleRoute);
             return result;
@@ -183,6 +185,7 @@ namespace Rabun.Oanda.Rest.Endpoints
             properties.Add("instrument", instrument);
             properties.Add("granularity", granularity);
             properties.Add("count", count);
+            properties.Add("candleFormat", OandaTypes.CandleFormat.bidask);
 
             Candle<CandleBidAsk> result = await Get<Candle<CandleBidAsk>>(null, properties, _candleRoute);
             return result;
@@ -213,6 +216,7 @@ namespace Rabun.Oanda.Rest.Endpoints
             properties.Add("granularity", granularity);
             properties.Add("start", start.ToString("o"));
             properties.Add("end", end.ToString("o"));
+            properties.Add("candleFormat", OandaTypes.CandleFormat.bidask);
 
             Candle<CandleBidAsk> result = await Get<Candle<CandleBidAsk>>(null, properties, _candleRoute);
             return result;
@@ -233,6 +237,7 @@ namespace Rabun.Oanda.Rest.Endpoints
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("instrument", instrument);
+            properties.Add("candleFormat", OandaTypes.CandleFormat.midpoint);
 
             Candle<CandleMid> result = await Get<Candle<CandleMid>>(null, properties, _candleRoute);
             return result;
@@ -255,6 +260,7 @@ namespace Rabun.Oanda.Rest.Endpoints
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("instrument", instrument);
             properties.Add("granularity", granularity);
+            properties.Add("candleFormat", OandaTypes.CandleFormat.midpoint);
 
             Candle<CandleMid> result = await Get<Candle<CandleMid>>(null, properties, _candleRoute);
             return result;
@@ -285,6 +291,7 @@ namespace Rabun.Oanda.Rest.Endpoints
             properties.Add("instrument", instrument);
             properties.Add("granularity", granularity);
             properties.Add("count", count);
+            properties.Add("candleFormat", OandaTypes.CandleFormat.midpoint);
 
             Candle<CandleMid> result = await Get<Candle<CandleMid>>(null, properties, _candleRoute);
             return result;
@@ -315,6 +322,7 @@ namespace Rabun.Oanda.Rest.Endpoints
             properties.Add("granularity", granularity);
             properties.Add("start", start.ToString("o"));
             properties.Add("end", end.ToString("o"));
+            properties.Add("candleFormat", OandaTypes.CandleFormat.midpoint);
 
             Candle<CandleMid> result = await Get<Candle<CandleMid>>(null, properties, _candleRoute);
             return result;
