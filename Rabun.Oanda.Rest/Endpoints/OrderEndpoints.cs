@@ -6,6 +6,9 @@ using Rabun.Oanda.Rest.Models;
 
 namespace Rabun.Oanda.Rest.Endpoints
 {
+    /// <summary>
+    /// Order endpoints
+    /// </summary>
     public class OrderEndpoints : Endpoint
     {
         private readonly string _ordersRoute = "/v1/accounts/:accountId/orders";
@@ -146,11 +149,12 @@ namespace Rabun.Oanda.Rest.Endpoints
         /// <param name="price">Required If order type is "limit", "stop", or "marketIfTouched". The price where the order is set to trigger at</param>
         /// <param name="lowerBound">Optional The minimum execution price</param>
         /// <param name="upperBound">Optional The maximum execution price</param>
+        /// <param name="stopLoss">The stop loss price</param>
         /// <param name="takeProfit">Optional The take profit price</param>
         /// <param name="trailingStop">Optional The trailing stop distance in pips, up to one decimal place</param>
         /// <returns></returns>
         public async Task<OrderOpen> CreateOrder(string instrument, int units, OandaTypes.Side side,
-            OandaTypes.OrderType type, DateTime? expiry, float? price, float? lowerBound, float? upperBound, int? takeProfit, int? trailingStop)
+            OandaTypes.OrderType type, DateTime? expiry, float? price, float? lowerBound, float? upperBound, float? stopLoss, float? takeProfit, float? trailingStop)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
@@ -164,6 +168,7 @@ namespace Rabun.Oanda.Rest.Endpoints
             if (price != null) properties.Add("price", price.ToString());
             if (lowerBound != null) properties.Add("lowerBound", lowerBound.ToString());
             if (upperBound != null) properties.Add("upperBound", upperBound.ToString());
+            if (stopLoss != null) properties.Add("stopLoss", stopLoss.ToString());
             if (takeProfit != null) properties.Add("takeProfit", takeProfit.ToString());
             if (trailingStop != null) properties.Add("trailingStop", trailingStop.ToString());
 
@@ -193,6 +198,32 @@ namespace Rabun.Oanda.Rest.Endpoints
             properties.Add("instrument", instrument);
             properties.Add("units", units.ToString());
             properties.Add("side", side.ToString());
+            properties.Add("type", OandaTypes.OrderType.market.ToString());
+
+            OrderMarketOpen orderMarket = await Post<OrderMarketOpen>(routeParams, properties, _ordersRoute);
+            return orderMarket;
+        }
+
+        /// <summary>
+        /// Create a new order
+        /// </summary>
+        /// <param name="instrument">Required Instrument to open the order on</param>
+        /// <param name="units">Required The number of units to open order for</param>
+        /// <param name="side">Required Direction of the order, either "buy" or "sell"</param>
+        /// <param name="stopLoss">The stop loss price</param>
+        /// <param name="takeProfit">Optional The take profit price</param>
+        /// <returns></returns>
+        public async Task<OrderOpen> CreateMarketOrder(string instrument, int units, OandaTypes.Side side, float stopLoss, float takeProfit)
+        {
+            Dictionary<string, string> routeParams = new Dictionary<string, string>();
+            routeParams.Add("accountId", _accountId.ToString());
+
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+            properties.Add("instrument", instrument);
+            properties.Add("units", units.ToString());
+            properties.Add("side", side.ToString());
+            properties.Add("stopLoss", stopLoss.ToString());
+            properties.Add("takeProfit", takeProfit.ToString());
             properties.Add("type", OandaTypes.OrderType.market.ToString());
 
             OrderMarketOpen orderMarket = await Post<OrderMarketOpen>(routeParams, properties, _ordersRoute);

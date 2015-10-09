@@ -8,11 +8,20 @@ using Rabun.Oanda.Rest.Models;
 
 namespace Rabun.Oanda.Rest.Endpoints
 {
+    /// <summary>
+    /// Transaction endpoints
+    /// </summary>
     public class TransactionEndpoints : Endpoint
     {
         private readonly string _transactionsRoute = "/v1/accounts/:accountId/transactions";
         private readonly int _accountId;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TransactionEndpoints"/> class.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="accountType">Type of the account.</param>
+        /// <param name="accountId">The account identifier.</param>
         public TransactionEndpoints(string key, AccountType accountType, int accountId)
             : base(key, accountType)
         {

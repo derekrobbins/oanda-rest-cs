@@ -14,7 +14,7 @@ namespace Rabun.Oanda.Rest.Test.Endpoints
         private readonly OrderEndpoints _orderEndpoints;
         public OrderEndpointsTest()
         {
-            _orderEndpoints = new OrderEndpoints("ec89b162d4a9922c8fa40769c2453d8b-cc1fb522857d46a08a90ef09730343a6", AccountType.practice, 4905675);
+            _orderEndpoints = new OrderEndpoints("906f5516de0f0c6b81ead9313907b083-c86648426a63ee68feade8531c5468e0", AccountType.practice, 4905675);
         }
 
         #region GetOrdersTest
@@ -69,7 +69,7 @@ namespace Rabun.Oanda.Rest.Test.Endpoints
         [TestMethod]
         public async Task CreateOrderTest()
         {
-            OrderOpen order = await _orderEndpoints.CreateOrder("EUR_USD", 777, OandaTypes.Side.buy, OandaTypes.OrderType.marketIfTouched, DateTime.Now.AddDays(1), 1.1630f, null, null, null, null);
+            OrderOpen order = await _orderEndpoints.CreateOrder("EUR_USD", 777, OandaTypes.Side.buy, OandaTypes.OrderType.marketIfTouched, DateTime.Now.AddDays(1), 1.1630f,null, null, null, null, null);
             Assert.IsNotNull(order);
         }
 
@@ -77,6 +77,13 @@ namespace Rabun.Oanda.Rest.Test.Endpoints
         public async Task CreateMarketOrderTest()
         {
             OrderOpen order = await _orderEndpoints.CreateMarketOrder("EUR_USD", 999, OandaTypes.Side.buy);
+            Assert.IsNotNull(order);
+        }
+
+        [TestMethod]
+        public async Task CreateMarketOrderTest01()
+        {
+            OrderOpen order = await _orderEndpoints.CreateMarketOrder("EUR_USD", 1000, OandaTypes.Side.buy,1.13343f,1.13998f);
             Assert.IsNotNull(order);
         }
 

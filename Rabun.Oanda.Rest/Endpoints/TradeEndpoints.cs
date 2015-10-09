@@ -5,13 +5,21 @@ using Rabun.Oanda.Rest.Models;
 
 namespace Rabun.Oanda.Rest.Endpoints
 {
+    /// <summary>
+    /// Trade endpoints
+    /// </summary>
     public class TradeEndpoints : Endpoint
     {
         private readonly string _tradesRoute = "/v1/accounts/:accountId/trades";
         private readonly string _tradeRoute = "/v1/accounts/:accountId/trades/:tradeId";
         private readonly int _accountId;
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TradeEndpoints"/> class.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="accountType">Type of the account.</param>
+        /// <param name="accountId">The account identifier.</param>
         public TradeEndpoints(string key, AccountType accountType, int accountId)
             : base(key, accountType)
         {

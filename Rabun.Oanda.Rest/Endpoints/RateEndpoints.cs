@@ -7,6 +7,9 @@ using Rabun.Oanda.Rest.Models;
 namespace Rabun.Oanda.Rest.Endpoints
 {
 
+    /// <summary>
+    /// Rate endpoints
+    /// </summary>
     public class RateEndpoints : Endpoint
     {
         private static readonly string _instrumentsRoute = "/v1/instruments";
@@ -14,6 +17,13 @@ namespace Rabun.Oanda.Rest.Endpoints
         private static readonly string _candleRoute = "/v1/candles";
         private readonly int _accountId;
 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RateEndpoints"/> class.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="accountType">Type of the account.</param>
+        /// <param name="accountId">The account identifier.</param>
         public RateEndpoints(string key, AccountType accountType, int accountId)
             : base(key, accountType)
         {

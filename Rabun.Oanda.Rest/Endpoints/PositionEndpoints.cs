@@ -1,18 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Rabun.Oanda.Rest.Base;
 using Rabun.Oanda.Rest.Models;
 
 namespace Rabun.Oanda.Rest.Endpoints
 {
+    /// <summary>
+    /// Position endpoints
+    /// </summary>
     public class PositionEndpoints : Endpoint
     {
 
-        private static String _positionsRoute = "/v1/accounts/:accountId/positions";
-        private static String _positionRoute = "/v1/accounts/:accountId/positions/:instrument";
+        private static string _positionsRoute = "/v1/accounts/:accountId/positions";
+        private static string _positionRoute = "/v1/accounts/:accountId/positions/:instrument";
         private readonly int _accountId;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PositionEndpoints"/> class.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="accountType">Type of the account.</param>
+        /// <param name="accountId">The account identifier.</param>
         public PositionEndpoints(string key, AccountType accountType, int accountId)
             : base(key, accountType)
         {
