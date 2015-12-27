@@ -2,7 +2,7 @@
 {
     public class OrderClosed
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Instrument { get; set; }
         public string Time { get; set; }
         public float Price { get; set; }

@@ -2,7 +2,7 @@
 {
     public class TradeOpened
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public int Units { get; set; }
         public float TakeProfit { get; set; }
         public float StopLoss { get; set; }

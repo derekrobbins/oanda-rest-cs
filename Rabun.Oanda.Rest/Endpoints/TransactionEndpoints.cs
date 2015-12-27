@@ -37,7 +37,7 @@ namespace Rabun.Oanda.Rest.Endpoints
         /// <param name="instrument">Retrieve transactions for a specific instrument only</param>
         /// <param name="ids">An URL encoded comma (%2C) separated list of transaction ids to retrieve. Maximum number of ids: 50. No other parameter may be specified with the ids parameter</param>
         /// <returns></returns>
-        public async Task<List<Transaction>> GetTransactions(int? maxId, int? minId, int? count, string instrument, string ids)
+        public async Task<List<Transaction>> GetTransactions(long? maxId, long? minId, int? count, string instrument, string ids)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
