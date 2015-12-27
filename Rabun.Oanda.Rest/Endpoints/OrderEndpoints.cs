@@ -99,7 +99,7 @@ namespace Rabun.Oanda.Rest.Endpoints
         /// <param name="ids">An URL encoded comma (%2C) separated list of orders to retrieve. 
         /// Maximum number of ids: 50. No other parameter may be specified with the ids paramete</param>
         /// <returns></returns>
-        public async Task<List<Order>> GetOrders(string instrument, int? count, int? maxId, string ids)
+        public async Task<List<Order>> GetOrders(string instrument, int? count, long? maxId, string ids)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
@@ -124,7 +124,7 @@ namespace Rabun.Oanda.Rest.Endpoints
         /// </summary>
         /// <param name="orderId">Order id</param>
         /// <returns></returns>
-        public async Task<Order> GetOrder(int orderId)
+        public async Task<Order> GetOrder(long orderId)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
@@ -189,7 +189,7 @@ namespace Rabun.Oanda.Rest.Endpoints
         /// <param name="units">Required The number of units to open order for</param>
         /// <param name="side">Required Direction of the order, either "buy" or "sell"</param>
         /// <returns></returns>
-        public async Task<OrderOpen> CreateMarketOrder(string instrument, int units, OandaTypes.Side side)
+        public async Task<OrderMarketOpen> CreateMarketOrder(string instrument, int units, OandaTypes.Side side)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
@@ -200,8 +200,9 @@ namespace Rabun.Oanda.Rest.Endpoints
             properties.Add("side", side.ToString());
             properties.Add("type", OandaTypes.OrderType.market.ToString());
 
-            OrderMarketOpen orderMarket = await Post<OrderMarketOpen>(routeParams, properties, _ordersRoute);
-            return orderMarket;
+            OrderMarketOpen orderMarketOpen = await Post<OrderMarketOpen>(routeParams, properties, _ordersRoute);
+
+            return orderMarketOpen;
         }
 
         /// <summary>
@@ -213,7 +214,7 @@ namespace Rabun.Oanda.Rest.Endpoints
         /// <param name="stopLoss">The stop loss price</param>
         /// <param name="takeProfit">Optional The take profit price</param>
         /// <returns></returns>
-        public async Task<OrderOpen> CreateMarketOrder(string instrument, int units, OandaTypes.Side side, float stopLoss, float takeProfit)
+        public async Task<OrderMarketOpen> CreateMarketOrder(string instrument, int units, OandaTypes.Side side, float stopLoss, float takeProfit)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
@@ -226,8 +227,9 @@ namespace Rabun.Oanda.Rest.Endpoints
             properties.Add("takeProfit", takeProfit.ToString());
             properties.Add("type", OandaTypes.OrderType.market.ToString());
 
-            OrderMarketOpen orderMarket = await Post<OrderMarketOpen>(routeParams, properties, _ordersRoute);
-            return orderMarket;
+            OrderMarketOpen orderMarketOpen = await Post<OrderMarketOpen>(routeParams, properties, _ordersRoute);
+
+            return orderMarketOpen;
         }
 
         /// <summary>
@@ -239,7 +241,7 @@ namespace Rabun.Oanda.Rest.Endpoints
         /// <param name="expiry">Required If order type is "limit", "stop", or "marketIfTouched". The order expiration time in UTC. The value specified must be in a valid datetime format</param>
         /// <param name="price">Required If order type is "limit", "stop", or "marketIfTouched". The price where the order is set to trigger at</param>
         /// <returns></returns>
-        public async Task<OrderOpen> CreateMarketIfTouchedOrder(string instrument, int units, OandaTypes.Side side, DateTime expiry, float price)
+        public async Task<OrderMarketIfTouchedOpen> CreateMarketIfTouchedOrder(string instrument, int units, OandaTypes.Side side, DateTime expiry, float price)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
@@ -252,22 +254,21 @@ namespace Rabun.Oanda.Rest.Endpoints
             properties.Add("expiry", expiry.ToString("o"));
             properties.Add("price", price.ToString());
 
-            OrderMarketIfTouchedOpen orderMarketIfTouched = await Post<OrderMarketIfTouchedOpen>(routeParams, properties, _ordersRoute);
-            return orderMarketIfTouched;
+            OrderMarketIfTouchedOpen orderMarketIfTouchedOpen = await Post<OrderMarketIfTouchedOpen>(routeParams, properties, _ordersRoute);
+
+            return orderMarketIfTouchedOpen;
         }
 
         #endregion
 
         #region UpdateOrder
 
-        public async Task<OrderMarketIfTouched> UpdateOrder(int orderId, int? units, float? price, DateTime? expiry,
-            float? lowerBound, float? upperBound, float? stopLoss, float? takeProfit,
-            int? trailingStop)
+        public async Task<OrderMarketIfTouched> UpdateOrder(long orderId, int? units, float? price, DateTime? expiry,
+            float? lowerBound, float? upperBound, float? stopLoss, float? takeProfit, int? trailingStop)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
             routeParams.Add("orderId", orderId.ToString());
-
 
             Dictionary<string, string> properties = new Dictionary<string, string>();
             if (units != null) properties.Add("units", units.ToString());
@@ -279,6 +280,7 @@ namespace Rabun.Oanda.Rest.Endpoints
             if (trailingStop != null) properties.Add("trailingStop", trailingStop.ToString());
 
             OrderMarketIfTouched orderMarketIfTouched = await Patch<OrderMarketIfTouched>(routeParams, properties, _orderRoute);
+
             return orderMarketIfTouched;
         }
 
@@ -291,14 +293,15 @@ namespace Rabun.Oanda.Rest.Endpoints
         /// </summary>
         /// <param name="orderId">Order id</param>
         /// <returns></returns>
-        public async Task<OrderClosed> CloseOrder(int orderId)
+        public async Task<OrderClosed> CloseOrder(long orderId)
         {
             Dictionary<string, string> routeParams = new Dictionary<string, string>();
             routeParams.Add("accountId", _accountId.ToString());
             routeParams.Add("orderId", orderId.ToString());
 
-            OrderClosed order = await Delete<OrderClosed>(routeParams, _orderRoute);
-            return order;
+            OrderClosed orderClosed = await Delete<OrderClosed>(routeParams, _orderRoute);
+
+            return orderClosed;
         }
 
         #endregion

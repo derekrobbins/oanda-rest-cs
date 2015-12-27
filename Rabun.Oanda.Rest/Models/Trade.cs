@@ -2,7 +2,7 @@
 {
     public class Trade
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public int Units { get; set; }
         public OandaTypes.Side Side { get; set; }
         public string Instrument { get; set; }
