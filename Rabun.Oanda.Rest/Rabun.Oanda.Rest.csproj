@@ -13,7 +13,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile344</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile255</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -45,15 +45,19 @@
   <ItemGroup>
     <Compile Include="Base\AccountType.cs" />
     <Compile Include="Base\Endpoint.cs" />
+    <Compile Include="Endpoints\AccountEndpoints.cs" />
     <Compile Include="Endpoints\OrderEndpoints.cs" />
     <Compile Include="Endpoints\PositionEndpoints.cs" />
     <Compile Include="Endpoints\RateEndpoints.cs" />
     <Compile Include="Endpoints\TradeEndpoints.cs" />
     <Compile Include="Endpoints\TransactionEndpoints.cs" />
     <Compile Include="Factories\DefaultFactory.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AccountDetail.cs" />
     <Compile Include="Models\Candle.cs" />
     <Compile Include="Models\CandleBidAsk.cs" />
     <Compile Include="Models\CandleMid.cs" />
+    <Compile Include="Models\OrderCustomOpen.cs" />
     <Compile Include="Models\InstrumentHistory.cs" />
     <Compile Include="Models\InstrumentModel.cs" />
     <Compile Include="Models\OandaTypes.cs" />
@@ -102,9 +106,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net40+sl4+win8+wp71+wpa81\Microsoft.Threading.Tasks.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>bin\Debug\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net40+sl4+win8+wp71+wpa81\Microsoft.Threading.Tasks.Extensions.dll</HintPath>

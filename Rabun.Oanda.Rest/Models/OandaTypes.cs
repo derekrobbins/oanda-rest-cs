@@ -90,5 +90,44 @@
             Saturday,
             Sunday
         }
+
+        public enum AccountCurrency
+        {
+            EUR,
+            USD,
+            SGD,
+            CHF,
+            CAD,
+            GBP,
+            AUD,
+            HKD,
+            JPY
+        }
+
+        public enum TradeCurrency
+        {
+            EUR,
+            USD,
+            SGD,
+            CHF,
+            CAD,
+            GBP,
+            JPY,
+            AUD,
+            ZAR,
+            HKD,
+            NZD,
+            CZK,
+            DKK,
+            HUF,
+            NOK,
+            SEK,
+            SAR,
+            TRY,
+            CNH,
+            MXN,
+            PLN,
+            THD
+        }
     }
 }
