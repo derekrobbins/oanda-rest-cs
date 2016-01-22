@@ -177,13 +177,15 @@ namespace Rabun.Oanda.Rest.Endpoints
                 OrderMarketOpen orderMarket = await Post<OrderMarketOpen>(routeParams, properties, _ordersRoute);
                 return orderMarket;
             }
-
-            OrderMarketIfTouchedOpen orderMarketIfTouched = await Post<OrderMarketIfTouchedOpen>(routeParams, properties, _ordersRoute);
-            return orderMarketIfTouched;
+            else
+            {
+                OrderCustumOpen customOrder = await Post<OrderCustumOpen>(routeParams, properties, _ordersRoute);
+                return customOrder;
+            }
         }
 
         /// <summary>
-        /// Create a new order
+        /// Create a new market order
         /// </summary>
         /// <param name="instrument">Required Instrument to open the order on</param>
         /// <param name="units">Required The number of units to open order for</param>
@@ -206,7 +208,7 @@ namespace Rabun.Oanda.Rest.Endpoints
         }
 
         /// <summary>
-        /// Create a new order
+        /// Create a new market order
         /// </summary>
         /// <param name="instrument">Required Instrument to open the order on</param>
         /// <param name="units">Required The number of units to open order for</param>

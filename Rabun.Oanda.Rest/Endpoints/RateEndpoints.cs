@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Rabun.Oanda.Rest.Base;
 using Rabun.Oanda.Rest.Models;
+using System.Linq;
 
 namespace Rabun.Oanda.Rest.Endpoints
 {
@@ -16,6 +17,8 @@ namespace Rabun.Oanda.Rest.Endpoints
         private static readonly string _priceRoute = "/v1/prices";
         private static readonly string _candleRoute = "/v1/candles";
         private readonly int _accountId;
+        private readonly string _key;
+        private AccountType _accountType;
 
 
         /// <summary>
@@ -28,6 +31,8 @@ namespace Rabun.Oanda.Rest.Endpoints
             : base(key, accountType)
         {
             _accountId = accountId;
+            _key = key;
+            _accountType = accountType;
         }
 
         #region GetInstruments
@@ -119,9 +124,60 @@ namespace Rabun.Oanda.Rest.Endpoints
             return wrapper.Prices;
         }
 
+
+
         private class PriceWrapper
         {
             public List<Price> Prices { get; set; }
+        }
+
+        #endregion
+
+        #region GetMargins
+        public async Task<int> GetAvailableUnitsToTrade(string instrument, float maxMarginRatioToUse = 1)
+        {
+            AccountDetails accountDetails = await new AccountEndpoints(_key, _accountType).GetAccountDetails(_accountId);
+
+            OandaTypes.TradeCurrency baseCurrency = (OandaTypes.TradeCurrency)Enum.Parse(typeof(OandaTypes.TradeCurrency), new string(instrument.ToCharArray().TakeWhile(x => x != '_').ToArray()), true);
+            OandaTypes.AccountCurrency accountCurrency = accountDetails.AccountCurrency;
+
+            float marginInstrumentPrice = 1;
+
+            if (baseCurrency.ToString() != accountCurrency.ToString())
+            {
+                marginInstrumentPrice = (await GetPrices(baseCurrency.ToString() + "_" + accountCurrency.ToString())).First().Ask;
+            }
+
+            return Convert.ToInt32(((accountDetails.MarginAvail * maxMarginRatioToUse) / accountDetails.MarginRate) / marginInstrumentPrice);
+        }
+
+        public async Task<float> GetMarginRequired(string instrument, int units)
+        {
+            AccountDetails accountDetails = await new AccountEndpoints(_key, _accountType).GetAccountDetails(_accountId);
+
+            OandaTypes.TradeCurrency baseCurrency = (OandaTypes.TradeCurrency)Enum.Parse(typeof(OandaTypes.TradeCurrency), new string(instrument.ToCharArray().TakeWhile(x => x != '_').ToArray()), true);
+            OandaTypes.AccountCurrency accountCurrency = accountDetails.AccountCurrency;
+
+            float marginInstrumentPrice = 1;
+
+            if (baseCurrency.ToString() != accountCurrency.ToString())
+            {
+                marginInstrumentPrice = (await GetPrices(baseCurrency.ToString() + "_" + accountCurrency.ToString())).First().Ask;
+            }
+
+            return Convert.ToSingle((marginInstrumentPrice * units) * accountDetails.MarginRate);
+        }
+
+        public async Task<float> GetMarginToAdd(string instrument, int units, float minMarginRatio)
+        {
+            AccountDetails accountDetails = await new AccountEndpoints(_key, _accountType).GetAccountDetails(_accountId); 
+
+            float marginRequiredForTrade = await GetMarginRequired(instrument, units);
+
+            var totalMargin = accountDetails.MarginUsed + accountDetails.MarginAvail;
+            var marginAvailAfterTrade = accountDetails.MarginAvail - marginRequiredForTrade;
+
+            return Convert.ToSingle((((minMarginRatio * totalMargin) - marginAvailAfterTrade) / (1 - minMarginRatio)) * accountDetails.MarginRate);
         }
 
         #endregion
