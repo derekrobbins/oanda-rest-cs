@@ -134,18 +134,40 @@ namespace Rabun.Oanda.Rest.Endpoints
         #endregion
 
         #region GetMargins
-        public async Task<int> GetAvailableUnitsToTrade(string instrument, float maxMarginRatioToUse = 1)
+        public async Task<int> GetAvailableUnitsToTrade(string instrument, OandaTypes.Side side, float maxMarginRatioToUse = 1)
         {
             AccountDetails accountDetails = await new AccountEndpoints(_key, _accountType).GetAccountDetails(_accountId);
 
             OandaTypes.TradeCurrency baseCurrency = (OandaTypes.TradeCurrency)Enum.Parse(typeof(OandaTypes.TradeCurrency), new string(instrument.ToCharArray().TakeWhile(x => x != '_').ToArray()), true);
+
             OandaTypes.AccountCurrency accountCurrency = accountDetails.AccountCurrency;
 
             float marginInstrumentPrice = 1;
 
             if (baseCurrency.ToString() != accountCurrency.ToString())
             {
-                marginInstrumentPrice = (await GetPrices(baseCurrency.ToString() + "_" + accountCurrency.ToString())).First().Ask;
+                string marginInstrument = baseCurrency.ToString() + "_" + accountCurrency.ToString();
+
+                if (!Enum.GetNames(typeof(OandaTypes.TradeCurrencyPair)).Contains(marginInstrument))
+                {
+                    marginInstrument = accountCurrency.ToString() + "_" + baseCurrency.ToString();
+                }
+
+                try
+                {
+                    if (side == OandaTypes.Side.buy)
+                    {
+                        marginInstrumentPrice = (await GetPrices(marginInstrument)).First().Ask;
+                    }
+                    else
+                    {
+                        marginInstrumentPrice = (await GetPrices(marginInstrument)).First().Bid;
+                    }
+                }
+                catch
+                {
+                    return 0;
+                }
             }
 
             return Convert.ToInt32(((accountDetails.MarginAvail * maxMarginRatioToUse) / accountDetails.MarginRate) / marginInstrumentPrice);
